@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="Blog" />
+        <meta name="author" content="Andres Bustos" />
+
+        <title><ui:insert name="title">Blog</ui:insert> - Blog</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="#{request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+        <!-- Custom fonts for this template -->
+        <link href="#{request.contextPath}/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' />
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' />
+
+        <!-- Custom styles for this template -->
+        <link href="#{request.contextPath}/resources/css/clean-blog.min.css" rel="stylesheet" />
+        <ui:insert name="styles"></ui:insert>
+    </h:head>
+</ui:composition>
+

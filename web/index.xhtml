@@ -1,12 +1,38 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
-
+<ui:composition template="/WEB-INF/template/blog/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="content">
+        <!-- Main Content -->
+        <h:form prependId="false">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <!--foreach-->
+                        <div class="post-preview">
+                            <h:commandLink>
+                                <h2 class="post-title">
+                                    Man must explore, and this is exploration at its greatest
+                                </h2>
+                                <h3 class="post-subtitle">
+                                    Problems look mighty small from 150 miles up
+                                </h3>
+                            </h:commandLink>
+                            <p class="post-meta">Publicado por
+                                <strong>Start Bootstrap</strong>
+                                on September 24, 2019</p>
+                        </div>
+                        <hr />
+                        <!--end foreach-->
+                        <!-- Pager -->
+                        <!--                <div class="clearfix">
+                                            <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+                                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
