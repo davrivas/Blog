@@ -4,6 +4,7 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="title">Inicio</ui:define>
     <ui:define name="content">
         <!-- Main Content -->
         <h:form prependId="false">
@@ -20,9 +21,11 @@
                                     Problems look mighty small from 150 miles up
                                 </h3>
                             </h:commandLink>
-                            <p class="post-meta">Publicado por
-                                <strong>Start Bootstrap</strong>
-                                on September 24, 2019</p>
+                            <p class="post-meta">
+                                Publicado por <strong>Start Bootstrap</strong> on September 24, 2019<br/>
+                                Etiquetas: <a href="#">Uno</a>, <a href="#">Dos</a>, <a href="#">tres</a><br />
+                                2 <i class="fa fa-comment"></i> comentarios
+                            </p>
                         </div>
                         <hr />
                         <!--end foreach-->
