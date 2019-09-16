@@ -1,6 +1,6 @@
 $(function() {
     var $navbar = $('#mainNav');
     var $blackNav = $('#blackNav');
-    var height = $navbar.height() + "px";
-    $blackNav.css('height', height);
+    var navHeight = $navbar.height() + "px";
+    $blackNav.height(navHeight);
 });

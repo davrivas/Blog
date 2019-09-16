@@ -5,17 +5,38 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>        
         <ui:include src="/WEB-INF/template/common/head.xhtml"></ui:include>
+        <!-- Page level plugin CSS-->
+        <link href="#{request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+        <link href="#{request.contextPath}/resources/css/sb-admin.min.css" rel="stylesheet" />
     </h:head>
     <h:body>
-        <ui:include src="/WEB-INF/template/blog/navbar.xhtml"></ui:include>
+        <ui:include src="/WEB-INF/template/admin/navbar.xhtml"></ui:include>
 
-        <ui:insert name="content"></ui:insert>
+        <div id="wrapper">
+            <ui:include src="/WEB-INF/template/admin/sidebar-navbar.xhtml"></ui:include>
 
-        <hr />
+            <div id="content-wrapper">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <ui:insert name="breadcrumb"></ui:insert>
+                </ol>
 
-        <ui:include src="/WEB-INF/template/blog/footer.xhtml"></ui:include>
+                <ui:insert name="content"></ui:insert>
+
+                <ui:include src="/WEB-INF/template/admin/footer.xhtml"></ui:include>
+            </div>
+        </div>
 
         <ui:include src="/WEB-INF/template/common/scripts.xhtml"></ui:include>
+        <!-- Core plugin JavaScript-->
+        <script src="#{request.contextPath}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- Page level plugin JavaScript-->
+        <script src="#{request.contextPath}/resources/vendor/datatables/jquery.dataTables.js"></script>
+        <script src="#{request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.js"></script>
+        
+        <script src="#{request.contextPath}/resources/js/sb-admin.min.js"></script>
+        <script src="#{request.contextPath}/resources/js/datatables-demo.js"></script>
     </h:body>
 </html>
 
