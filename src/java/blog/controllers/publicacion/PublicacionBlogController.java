@@ -28,7 +28,8 @@ public class PublicacionBlogController {
     }
 
     public List<Publicacion> getPublicaciones() {
-        return pf.findAll();
+        this.publicaciones = pf.findAll();
+        return this.publicaciones;
     }
 
     public Publicacion getPublicacionSeleccionada() {

@@ -29,7 +29,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Publicacion.findAll", query = "SELECT p FROM Publicacion p")
     , @NamedQuery(name = "Publicacion.findById", query = "SELECT p FROM Publicacion p WHERE p.id = :id")
-    , @NamedQuery(name = "Publicacion.findByEtiquetas", query = "SELECT p FROM Publicacion p WHERE p.etiquetas = :etiquetas")
     , @NamedQuery(name = "Publicacion.findByFechaPublicacion", query = "SELECT p FROM Publicacion p WHERE p.fechaPublicacion = :fechaPublicacion")
     , @NamedQuery(name = "Publicacion.findByEstado", query = "SELECT p FROM Publicacion p WHERE p.estado = :estado")})
 public class Publicacion implements Serializable {
@@ -45,9 +44,6 @@ public class Publicacion implements Serializable {
     @Column(name = "contenido")
     private String contenido;
     @Basic(optional = false)
-    @Column(name = "etiquetas")
-    private String etiquetas;
-    @Basic(optional = false)
     @Column(name = "fecha_publicacion")
     @Temporal(TemporalType.DATE)
     private Date fechaPublicacion;
@@ -56,6 +52,9 @@ public class Publicacion implements Serializable {
     private short estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "publicacionId", fetch = FetchType.EAGER)
     private List<Comentario> comentarioList;
+    @JoinColumn(name = "categoria_publicacion_id", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private CategoriaPublicacion categoriaPublicacionId;
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario usuarioId;
@@ -67,10 +66,9 @@ public class Publicacion implements Serializable {
         this.id = id;
     }
 
-    public Publicacion(Integer id, String contenido, String etiquetas, Date fechaPublicacion, short estado) {
+    public Publicacion(Integer id, String contenido, Date fechaPublicacion, short estado) {
         this.id = id;
         this.contenido = contenido;
-        this.etiquetas = etiquetas;
         this.fechaPublicacion = fechaPublicacion;
         this.estado = estado;
     }
@@ -89,14 +87,6 @@ public class Publicacion implements Serializable {
 
     public void setContenido(String contenido) {
         this.contenido = contenido;
-    }
-
-    public String getEtiquetas() {
-        return etiquetas;
-    }
-
-    public void setEtiquetas(String etiquetas) {
-        this.etiquetas = etiquetas;
     }
 
     public Date getFechaPublicacion() {
@@ -122,6 +112,14 @@ public class Publicacion implements Serializable {
 
     public void setComentarioList(List<Comentario> comentarioList) {
         this.comentarioList = comentarioList;
+    }
+
+    public CategoriaPublicacion getCategoriaPublicacionId() {
+        return categoriaPublicacionId;
+    }
+
+    public void setCategoriaPublicacionId(CategoriaPublicacion categoriaPublicacionId) {
+        this.categoriaPublicacionId = categoriaPublicacionId;
     }
 
     public Usuario getUsuarioId() {
