@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      lang="es">
     <h:head>        
         <ui:include src="/WEB-INF/template/common/head.xhtml"></ui:include>
         <!-- Page level plugin CSS-->
@@ -19,7 +20,19 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <ui:insert name="breadcrumb"></ui:insert>
+                    <li class="breadcrumb-item active"><ui:insert name="title"></ui:insert></li>
                 </ol>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h1><ui:insert name="title"></ui:insert></h1>
+                    </div>
+                    <div class="card-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, aperiam, perferendis, animi est quibusdam assumenda aut cupiditate corrupti quod quos tempore debitis obcaecati officiis ducimus ullam facere laudantium recusandae modi.</p>
+                        <p>Ipsam, neque, sunt, voluptatem voluptatibus cupiditate fugiat commodi earum pariatur dolor inventore officia aliquam modi eveniet nisi quo tempora unde dolore ratione rerum voluptate error fuga quibusdam iure repellat id?</p>
+                        <p>Maiores, alias atque qui ipsum tempora repellendus corrupti quisquam labore explicabo doloremque pariatur officiis fugit vel vero voluptatum! Aliquid cupiditate atque commodi molestiae sint esse et explicabo error nisi numquam.</p>
+                    </div>
+                </div>
 
                 <ui:insert name="content"></ui:insert>
 
@@ -34,7 +47,7 @@
         <!-- Page level plugin JavaScript-->
         <script src="#{request.contextPath}/resources/vendor/datatables/jquery.dataTables.js"></script>
         <script src="#{request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.js"></script>
-        
+
         <script src="#{request.contextPath}/resources/js/sb-admin.min.js"></script>
         <script src="#{request.contextPath}/resources/js/datatables-demo.js"></script>
     </h:body>

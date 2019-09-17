@@ -6,10 +6,15 @@
     <!-- Bootstrap core JavaScript -->
     <script src="#{request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
     <script src="#{request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
     <!-- Custom scripts for this template -->
     <ui:insert name="scripts"></ui:insert>
     <!-- Para las alertas -->
-    <!-- <h:outputScript></h:outputScript> -->
+    <h:outputScript rendered="#{not empty scriptController.script}">
+        #{scriptController.mostrarScript()}
+    </h:outputScript>
 </ui:composition>
 
