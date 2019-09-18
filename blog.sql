@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 15, 2019 at 07:27 PM
+-- Generation Time: Sep 18, 2019 at 05:05 AM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -21,6 +21,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `blog`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categoria_publicacion`
+--
+
+CREATE TABLE `categoria_publicacion` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(25) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `categoria_publicacion`
+--
+
+INSERT INTO `categoria_publicacion` (`id`, `nombre`) VALUES
+(1, 'Noticia'),
+(2, 'Evento'),
+(3, 'Discusión');
 
 -- --------------------------------------------------------
 
@@ -46,8 +66,8 @@ CREATE TABLE `comentario` (
 CREATE TABLE `publicacion` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) NOT NULL,
+  `categoria_publicacion_id` int(11) NOT NULL,
   `contenido` text COLLATE utf8_spanish_ci NOT NULL,
-  `etiquetas` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `fecha_publicacion` date NOT NULL,
   `estado` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -108,11 +128,18 @@ CREATE TABLE `usuario_has_rol` (
 --
 
 INSERT INTO `usuario_has_rol` (`usuario_id`, `rol_id`) VALUES
-(1, 1);
+(1, 1),
+(1, 2);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `categoria_publicacion`
+--
+ALTER TABLE `categoria_publicacion`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `comentario`
@@ -127,7 +154,8 @@ ALTER TABLE `comentario`
 --
 ALTER TABLE `publicacion`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_publicaciones_usuarios1_idx` (`usuario_id`);
+  ADD KEY `fk_publicaciones_usuarios1_idx` (`usuario_id`),
+  ADD KEY `fk_publicacion_categoria1_idx` (`categoria_publicacion_id`);
 
 --
 -- Indexes for table `rol`
@@ -152,6 +180,12 @@ ALTER TABLE `usuario_has_rol`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `categoria_publicacion`
+--
+ALTER TABLE `categoria_publicacion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `comentario`
@@ -192,6 +226,7 @@ ALTER TABLE `comentario`
 -- Constraints for table `publicacion`
 --
 ALTER TABLE `publicacion`
+  ADD CONSTRAINT `fk_publicacion_categoria1` FOREIGN KEY (`categoria_publicacion_id`) REFERENCES `categoria_publicacion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_publicaciones_usuarios1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
