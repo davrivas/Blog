@@ -33,6 +33,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Publicacion.findByEstado", query = "SELECT p FROM Publicacion p WHERE p.estado = :estado")})
 public class Publicacion implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "titulo")
+    private String titulo;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +49,7 @@ public class Publicacion implements Serializable {
     private String contenido;
     @Basic(optional = false)
     @Column(name = "fecha_publicacion")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaPublicacion;
     @Basic(optional = false)
     @Column(name = "estado")
@@ -153,6 +157,14 @@ public class Publicacion implements Serializable {
     @Override
     public String toString() {
         return "blog.modelo.entidades.Publicacion[ id=" + id + " ]";
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
 }

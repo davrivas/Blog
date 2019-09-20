@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2019 at 05:05 AM
+-- Generation Time: Sep 20, 2019 at 04:51 AM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -53,7 +53,7 @@ CREATE TABLE `comentario` (
   `usuario_id` int(11) NOT NULL,
   `publicacion_id` int(11) NOT NULL,
   `comentario` varchar(1000) COLLATE utf8_spanish_ci NOT NULL,
-  `fecha_publicacion` date NOT NULL,
+  `fecha_publicacion` datetime NOT NULL,
   `estado` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -67,10 +67,18 @@ CREATE TABLE `publicacion` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) NOT NULL,
   `categoria_publicacion_id` int(11) NOT NULL,
+  `titulo` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `contenido` text COLLATE utf8_spanish_ci NOT NULL,
-  `fecha_publicacion` date NOT NULL,
+  `fecha_publicacion` datetime NOT NULL,
   `estado` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `publicacion`
+--
+
+INSERT INTO `publicacion` (`id`, `usuario_id`, `categoria_publicacion_id`, `titulo`, `contenido`, `fecha_publicacion`, `estado`) VALUES
+(2, 1, 1, 'Titulo', 'Ejemplo publicacion', '2019-09-19 20:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -167,7 +175,8 @@ ALTER TABLE `rol`
 -- Indexes for table `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `correo_UNIQUE` (`correo`);
 
 --
 -- Indexes for table `usuario_has_rol`
@@ -197,7 +206,7 @@ ALTER TABLE `comentario`
 -- AUTO_INCREMENT for table `publicacion`
 --
 ALTER TABLE `publicacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `rol`

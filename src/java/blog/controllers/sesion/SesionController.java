@@ -1,9 +1,8 @@
 package blog.controllers.sesion;
 
-import blog.constantes.RolesConstantes;
+import blog.constantes.Constantes;
 import blog.controllers.script.ScriptController;
 import blog.modelo.dao.UsuarioFacade;
-import blog.modelo.entidades.Rol;
 import blog.modelo.entidades.Usuario;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -33,7 +32,8 @@ public class SesionController implements Serializable{
     }
 
     public Usuario getUsuario() {
-        return usuario;
+        //return usuario;
+        return uf.find(1);
     }
 
     public void setUsuario(Usuario usuario) {
@@ -51,11 +51,11 @@ public class SesionController implements Serializable{
     }
     
     public boolean esAdministrador() {
-        return validarRol(RolesConstantes.ADMINISTRADOR_ID);
+        return validarRol(Constantes.ADMINISTRADOR_ID);
     }
     
     public boolean esVisitante() {
-        return validarRol(RolesConstantes.VISITANTE_ID);
+        return validarRol(Constantes.VISITANTE_ID);
     }
     
     private boolean validarRol(int rolId) {

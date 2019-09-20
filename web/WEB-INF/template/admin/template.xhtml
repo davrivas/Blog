@@ -28,17 +28,16 @@
                         <h1><ui:insert name="title"></ui:insert></h1>
                     </div>
                     <div class="card-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, aperiam, perferendis, animi est quibusdam assumenda aut cupiditate corrupti quod quos tempore debitis obcaecati officiis ducimus ullam facere laudantium recusandae modi.</p>
-                        <p>Ipsam, neque, sunt, voluptatem voluptatibus cupiditate fugiat commodi earum pariatur dolor inventore officia aliquam modi eveniet nisi quo tempora unde dolore ratione rerum voluptate error fuga quibusdam iure repellat id?</p>
-                        <p>Maiores, alias atque qui ipsum tempora repellendus corrupti quisquam labore explicabo doloremque pariatur officiis fugit vel vero voluptatum! Aliquid cupiditate atque commodi molestiae sint esse et explicabo error nisi numquam.</p>
+                        <ui:insert name="content"></ui:insert>
                     </div>
                 </div>
 
-                <ui:insert name="content"></ui:insert>
 
                 <ui:include src="/WEB-INF/template/admin/footer.xhtml"></ui:include>
             </div>
         </div>
+
+        <ui:include src="/WEB-INF/template/admin/cerrar-sesion.xhtml"></ui:include>
 
         <ui:include src="/WEB-INF/template/common/scripts.xhtml"></ui:include>
         <!-- Core plugin JavaScript-->
