@@ -20,7 +20,8 @@ public class CategoriaPublicacionController {
     }
     
     public List<CategoriaPublicacion> getCategorias() {
-        return cpf.findAll();
+        this.categorias = cpf.findAll();
+        return this.categorias;
     }
 
 }

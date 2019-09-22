@@ -7,35 +7,36 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="title">Publicaciones</ui:define>
     <ui:define name="content">
-        <h:form prependId="false">    
-            <h:commandLink class="btn btn-primary mb-5" action="#{publicacionAdminController.irACrearPublicacion()}">
-                <span class="fa fa-plus"></span> Crear publicación
-            </h:commandLink>
+        <a class="btn btn-primary mb-5" href="#{request.contextPath}/admin/nueva-publicacion.xhtml">
+            <span class="fa fa-plus"></span> Crear publicación
+        </a>
+        
+        <h:panelGroup rendered="#{not empty publicacionAdminController.publicaciones}">
+            <h:form prependId="false">    
 
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Fecha publicación</th>
-                            <th>Categoría</th>
-                            <th>Autor</th>
-                            <th>Título</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Fecha publicación</th>
-                            <th>Categoría</th>
-                            <th>Autor</th>
-                            <th>Título</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        <h:panelGroup rendered="#{not empty publicacionAdminController.publicaciones}">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Fecha publicación</th>
+                                <th>Categoría</th>
+                                <th>Autor</th>
+                                <th>Título</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Fecha publicación</th>
+                                <th>Categoría</th>
+                                <th>Autor</th>
+                                <th>Título</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
                             <ui:repeat value="#{publicacionAdminController.publicaciones}" var="p">
                                 <tr>
                                     <td>
@@ -53,31 +54,26 @@
                                         <h:outputText value="#{p.titulo}" />
                                     </td>
                                     <td>
-                                        <h:outputText rendered="#{p.estado == 1}" value="Activo" />
-                                        <h:outputText rendered="#{p.estado == 0}" value="Inactivo" />
+                                        <h:outputText rendered="#{p.estado == 1}" value="Activo" style="color: green;" />
+                                        <h:outputText rendered="#{p.estado == 0}" value="Inactivo" style="color: red;" />
                                     </td>
                                     <td>
-                                        <h:commandLink title="Ver detalles" class="btn btn-info">
+                                        <h:commandLink title="Ver detalles" class="btn btn-info" action="#{publicacionAdminController.verDetallePublicacion(p)}">
                                             <span class="fa fa-file"></span>
                                         </h:commandLink>
-                                        <h:commandLink title="Ver detalles" class="btn btn-warning ml-1 mr-1">
+                                        <h:commandLink title="Editar" class="btn btn-warning ml-1 mr-1" action="#{publicacionAdminController.verEditarPublicacion(p)}">
                                             <span class="fa fa-edit"></span>
-                                        </h:commandLink>
-                                        <h:commandLink title="Ver detalles" class="btn btn-danger">
-                                            <span class="fa fa-trash"></span>
                                         </h:commandLink>
                                     </td>
                                 </tr>
                             </ui:repeat>
-                        </h:panelGroup>
-                        <h:panelGroup rendered="#{empty publicacionAdminController.publicaciones}">
-                            <tr colspan="5">
-                                <td class="text-center"><em>No hay publicaciones</em></td>
-                            </tr>
-                        </h:panelGroup>
-                    </tbody>
-                </table>
-            </div>
-        </h:form>
+                        </tbody>
+                    </table>
+                </div>
+            </h:form>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{empty publicacionAdminController.publicaciones}">
+            <p class="text-center"><em>No hay publicaciones</em></p>
+        </h:panelGroup>
     </ui:define>
 </ui:composition>
