@@ -3,18 +3,19 @@
 <ui:composition template="/WEB-INF/template/blog/template.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="title">Inicio</ui:define>
     <ui:define name="content">
         <!-- Page Header -->
-        <header id="mastHead" class="masthead" style="background-image: url('resources/img/home-bg.jpg')">
+        <header id="mastHead" class="masthead" style="background-image: url('resources/img/church-bg.jpg')">
             <div class="overlay"></div>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-md-10 mx-auto">
                         <div class="site-heading">
-                            <h1>Clean Blog</h1>
-                            <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                            <h1>Blog iglesia</h1>
+                            <span class="subheading">Todas las noticias de la iglesia...</span>
                         </div>
                     </div>
                 </div>
@@ -22,35 +23,35 @@
         </header>
 
         <!-- Main Content -->
-        <h:form prependId="false">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-md-10 mx-auto">
-                        <!--foreach-->
-                        <div class="post-preview">
-                            <h:commandLink>
-                                <h2 class="post-title">
-                                    Man must explore, and this is exploration at its greatest
-                                </h2>
-                                <h3 class="post-subtitle">
-                                    Problems look mighty small from 150 miles up
-                                </h3>
-                            </h:commandLink>
-                            <p class="post-meta">
-                                Publicado por <strong>Start Bootstrap</strong> on September 24, 2019<br/>
-                                Categoria: <h:commandLink>[Nombre categoria]</h:commandLink><br />
-                                2 <i class="fa fa-comment"></i> comentarios
-                            </p>
-                        </div>
-                        <hr />
-                        <!--end foreach-->
-                        <!-- Pager -->
-                        <!--                <div class="clearfix">
-                                            <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-                                        </div>-->
-                    </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <h:form prependId="false">
+                        <ui:repeat value="#{publicacionBlogController.publicaciones}" var="p">
+                            <div class="post-preview">
+                                <h:commandLink action="#{publicacionBlogController.seleccionarPublicacion(p)}">
+                                    <h2 class="post-title">
+                                        <h:outputText value="#{p.titulo}" />
+                                    </h2>
+                                    <!-- <h3 class="post-subtitle">
+                                        Problems look mighty small from 150 miles up
+                                    </h3> -->
+                                </h:commandLink>
+                                <p class="post-meta">
+                                    Publicado por <strong><h:outputLabel value="#{p.usuarioId.nombres} #{p.usuarioId.apellidos}" /></strong> el <h:outputText value="#{p.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText><br/>
+                                    Categoria: <h:commandLink action="#{publicacionBlogController.seleccionarPublicacion(p)}"><h:outputText value=" #{p.categoriaPublicacionId.nombre}" /></h:commandLink><br />
+                                    <h:outputText value="#{publicacionBlogController.mostrarComentarios(p.comentarioList)}" escape="false" />
+                                </p>
+                            </div>
+                            <hr />
+                        </ui:repeat>
+                    </h:form>
+                    <!-- Pager -->
+                    <!-- <div class="clearfix">
+                        <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+                    </div> -->
                 </div>
             </div>
-        </h:form>
+        </div>
     </ui:define>
 </ui:composition>

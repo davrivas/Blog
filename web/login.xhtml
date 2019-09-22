@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/blog/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:define name="title">Login</ui:define>
+    <ui:define name="content">
+        <!-- Main Content -->
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <h1>Login</h1>
+                    
+                    <h:form prependId="false">
+                        <div class="control-group">
+                            <div class="form-group floating-label-form-group controls">
+                                <h:outputLabel for="correo" value="Correo" />
+                                <h:inputText class="form-control" a:placeholder="Correo" id="correo" required="true" requiredMessage="Escriba su correo" />
+                                <h:message for="correo" style="color: red;" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="form-group floating-label-form-group controls">
+                                <h:outputLabel for="clave" value="Clave" />
+                                <h:inputSecret class="form-control" a:placeholder="Clave" id="clave" required="true" requiredMessage="Escriba su clave" />
+                                <h:message for="clave" style="color: red;" />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <h:commandLink type="submit" class="btn btn-primary" action="#{sesionController.iniciarSesion()}">
+                                <i class="fa fa-login"></i> Iniciar sesión
+                            </h:commandLink>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

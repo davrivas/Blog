@@ -106,6 +106,7 @@ public class PublicacionAdminController implements Serializable {
     }
     
     public String renderizarContenidoPublicación(String contenido) {
+        // TODO: revisar esto
         System.out.println(contenido);
         contenido = contenido.replaceAll("\\  ", "\n");
         System.out.println(contenido);

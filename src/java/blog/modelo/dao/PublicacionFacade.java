@@ -1,5 +1,6 @@
 package blog.modelo.dao;
 
+import blog.modelo.entidades.CategoriaPublicacion;
 import blog.modelo.entidades.Publicacion;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -30,6 +31,39 @@ public class PublicacionFacade extends AbstractFacade<Publicacion> {
             TypedQuery<Publicacion> tq = getEntityManager().createQuery("SELECT p "
                     + "FROM Publicacion p "
                     + "ORDER BY p.fechaPublicacion DESC", Publicacion.class);
+            publicaciones = tq.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+        }
+        
+        return publicaciones;
+    }
+    
+    public List<Publicacion> findAllActivas() {
+        List<Publicacion> publicaciones = null;
+        
+        try {
+            TypedQuery<Publicacion> tq = getEntityManager().createQuery("SELECT p "
+                    + "FROM Publicacion p "
+                    + "WHERE p.estado = 1 "
+                    + "ORDER BY p.fechaPublicacion DESC", Publicacion.class);
+            publicaciones = tq.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+        }
+        
+        return publicaciones;
+    }
+    
+    public List<Publicacion> findAllPorTipo(CategoriaPublicacion categoria) {
+        List<Publicacion> publicaciones = null;
+        
+        try {
+            TypedQuery<Publicacion> tq = getEntityManager().createQuery("SELECT p "
+                    + "FROM Publicacion p "
+                    + "WHERE p.categoriaPublicacionId = :categoria AND p.estado = 1 "
+                    + "ORDER BY p.fechaPublicacion DESC", Publicacion.class);
+            tq.setParameter("categoria", categoria);
             publicaciones = tq.getResultList();
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
