@@ -8,6 +8,8 @@
         <ui:include src="/WEB-INF/template/common/head.xhtml"></ui:include>
         <!-- Page level plugin CSS-->
         <link href="#{request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+        <link href="#{request.contextPath}/resources/vendor/trumbowyg/ui/trumbowyg.min.css" rel="stylesheet" />
+        
         <link href="#{request.contextPath}/resources/css/sb-admin.min.css" rel="stylesheet" />
     </h:head>
     <h:body>
@@ -41,6 +43,7 @@
         <ui:insert name="modals"></ui:insert>
 
         <ui:include src="/WEB-INF/template/common/scripts.xhtml"></ui:include>
+        
         <!-- Core plugin JavaScript-->
         <script src="#{request.contextPath}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
 

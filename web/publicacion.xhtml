@@ -15,7 +15,7 @@
                         <a href="#{request.contextPath}/index.xhtml" class="btn btn-secondary mb-3">
                             <i class="fa fa-back"></i> Atrás
                         </a>
-                        
+
                         <h1><h:outputText value="#{publicacionBlogController.publicacionSeleccionada.titulo}" /></h1>
 
                         <h:form prependId="false">
@@ -26,11 +26,43 @@
                             </p>
                         </h:form>
 
-                        <p><h:outputText value="#{publicacionBlogController.publicacionSeleccionada.contenido}" /></p>
+                        <h:outputText value="#{publicacionBlogController.publicacionSeleccionada.contenido}" escape="false" />
+
+                        <h:form prependId="false">
+                            <div class="card mt-5">
+                                <div class="card-header">
+                                    <h3><h:outputLabel for="comentario" value="Añadir comentario" /></h3>
+                                </div>
+                                <div class="card-body">
+                                    <h:inputTextarea id="comentario" class="form-control" value="" requiredMessage="Debe agregar algo para comentar" />
+                                    <h:message for="comentario" style="color: red;" />
+                                </div>
+                                <div class="card-footer">
+                                    <h:commandButton type="submit" class="btn btn-primary" value="Comentar" />
+                                </div>
+                            </div>
+                        </h:form>
+
+                        <h:panelGroup rendered="#{empty publicacionBlogController.publicacionSeleccionada.comentarioList}">
+                            <p class="text-center"><em>No hay comentarios</em></p>
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{not empty publicacionBlogController.publicacionSeleccionada.comentarioList}">
+                            <h2>Comentarios <h:outputText value="(#{publicacionBlogController.publicacionSeleccionada.comentarioList.size()})" /></h2>
+                            <ui:repeat value="#{publicacionBlogController.publicacionSeleccionada.comentarioList}" var="c">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3><h:outputText value="#{c.usuarioId.nombres} #{c.usuarioId.apellidos}" /></h3>
+                                        Publicado el <h:outputText value="#{c.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText><br />
+                                    </div>
+                                    <div class="card-body">
+                                        <h:outputText value="#{c.comentario}" />
+                                    </div>
+                                </div>
+                            </ui:repeat>
+                        </h:panelGroup>
                     </div>
                 </div>
-                
-                <!-- comentarios -->
             </div>
         </article>
     </ui:define>

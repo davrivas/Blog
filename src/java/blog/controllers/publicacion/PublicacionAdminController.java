@@ -71,7 +71,7 @@ public class PublicacionAdminController implements Serializable {
 
             this.nuevaPublicacion = new Publicacion();
             this.scriptController.setScript(MessageUtils.mostrarMensajeExito("Publicación agregada satisfactoriamente"));
-            
+
             return "publicaciones.xhtml?faces-redirect=true";
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
@@ -91,7 +91,7 @@ public class PublicacionAdminController implements Serializable {
 
             this.publicacionSeleccionada = new Publicacion();
             this.scriptController.setScript(MessageUtils.mostrarMensajeExito("Publicación editada satisfactoriamente"));
-            
+
             return "publicaciones.xhtml?faces-redirect=true";
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
@@ -99,18 +99,18 @@ public class PublicacionAdminController implements Serializable {
             return "";
         }
     }
-    
+
     public String verDetallePublicacion(Publicacion p) {
         this.publicacionSeleccionada = p;
         return "detalle-publicacion.xhtml?faces-redirect=true";
     }
-    
+
     public String renderizarContenidoPublicación(String contenido) {
         // TODO: revisar esto
         System.out.println(contenido);
         contenido = contenido.replaceAll("\\  ", "\n");
         System.out.println(contenido);
-        
+
         return contenido;
     }
 
