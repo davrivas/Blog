@@ -5,6 +5,7 @@ import blog.controllers.script.ScriptController;
 import blog.modelo.dao.UsuarioFacade;
 import blog.modelo.entidades.Usuario;
 import blog.utils.MessageUtils;
+import blog.utils.UsuarioUtils;
 import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -34,12 +35,13 @@ public class SesionController implements Serializable {
 
     @PostConstruct
     public void init() {
-        usuario = new Usuario();
+        //this.usuario = new Usuario();
+        this.usuario = this.uf.find(1);
     }
 
     public Usuario getUsuario() {
-        //return usuario;
-        return uf.find(1);
+        return usuario;
+        //return uf.find(1);
     }
 
     public void setUsuario(Usuario usuario) {
@@ -104,21 +106,11 @@ public class SesionController implements Serializable {
     }
 
     public boolean esAdministrador() {
-        return validarRol(Constantes.ADMINISTRADOR_ID);
+        return UsuarioUtils.esAdministrador(this.usuario);
     }
 
     public boolean esVisitante() {
-        return validarRol(Constantes.VISITANTE_ID);
-    }
-
-    private boolean validarRol(int rolId) {
-        if (this.usuario == null)
-            return false;
-
-        if (this.usuario.getRolList() == null || this.usuario.getRolList().isEmpty())
-            return false;
-
-        return this.usuario.getRolList().stream().anyMatch((rol) -> (rol.getId() == rolId));
+        return UsuarioUtils.esVisitante(this.usuario);
     }
 
 }

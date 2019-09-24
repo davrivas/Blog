@@ -5,6 +5,7 @@ import blog.controllers.sesion.SesionController;
 import blog.modelo.dao.PublicacionFacade;
 import blog.modelo.entidades.Publicacion;
 import blog.utils.MessageUtils;
+import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -12,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 @Named(value = "publicacionAdminController")
@@ -23,6 +26,9 @@ public class PublicacionAdminController implements Serializable {
 
     @Inject
     private SesionController sc;
+    
+    @Inject
+    private PublicacionBlogController pbc;
 
     @Inject
     private ScriptController scriptController;
@@ -100,18 +106,17 @@ public class PublicacionAdminController implements Serializable {
         }
     }
 
-    public String verDetallePublicacion(Publicacion p) {
-        this.publicacionSeleccionada = p;
-        return "detalle-publicacion.xhtml?faces-redirect=true";
-    }
-
-    public String renderizarContenidoPublicación(String contenido) {
-        // TODO: revisar esto
-        System.out.println(contenido);
-        contenido = contenido.replaceAll("\\  ", "\n");
-        System.out.println(contenido);
-
-        return contenido;
+    public String verDetallePublicacion(Publicacion p) throws IOException {
+        this.pbc.setPublicacionSeleccionada(p);
+        
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ExternalContext ec = fc.getExternalContext();
+        
+        String path = ec.getRequestContextPath() + "/publicacion.xhtml";
+        
+        scriptController.setScript("window.open('" + path + "', '_newtab')");
+        
+        return "";
     }
 
 }

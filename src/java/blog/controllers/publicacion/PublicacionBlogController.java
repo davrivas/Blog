@@ -1,10 +1,13 @@
 package blog.controllers.publicacion;
 
 import blog.modelo.dao.CategoriaPublicacionFacade;
+import blog.modelo.dao.ComentarioFacade;
 import blog.modelo.dao.PublicacionFacade;
 import blog.modelo.entidades.CategoriaPublicacion;
 import blog.modelo.entidades.Comentario;
 import blog.modelo.entidades.Publicacion;
+import blog.modelo.entidades.Usuario;
+import blog.utils.UsuarioUtils;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -21,11 +24,15 @@ public class PublicacionBlogController {
     @EJB
     private CategoriaPublicacionFacade cpf;
     
+    @EJB
+    private ComentarioFacade cf;
+    
     private List<Publicacion> publicaciones;
     private List<Publicacion> publicacionesPorTipo;
     
     private Publicacion publicacionSeleccionada;
     private CategoriaPublicacion categoriaPublicacionSeleccionada;
+    private Comentario nuevoComentario;
     
     public PublicacionBlogController() {
     }
@@ -34,6 +41,7 @@ public class PublicacionBlogController {
     public void init() {
         this.publicacionSeleccionada = new Publicacion();
         this.categoriaPublicacionSeleccionada = new CategoriaPublicacion();
+        this.nuevoComentario = new Comentario();
     }
 
     public List<Publicacion> getPublicaciones() {
@@ -66,6 +74,14 @@ public class PublicacionBlogController {
     public void setCategoriaPublicacionSeleccionada(CategoriaPublicacion categoriaPublicacionSeleccionada) {
         this.categoriaPublicacionSeleccionada = categoriaPublicacionSeleccionada;
     }
+
+    public Comentario getNuevoComentario() {
+        return nuevoComentario;
+    }
+
+    public void setNuevoComentario(Comentario nuevoComentario) {
+        this.nuevoComentario = nuevoComentario;
+    }
     
     public String seleccionarPublicacion(Publicacion p) {
         this.publicacionSeleccionada = p;
@@ -77,5 +93,9 @@ public class PublicacionBlogController {
             return "<i class=\"fa fa-comment\"></i> Sin comentarios";
         
         return comentarios.size() + " <i class=\"fa fa-comment\"></i> comentarios";
+    }
+    
+    public boolean esAdministrador(Usuario u) {
+        return UsuarioUtils.esAdministrador(u);
     }
 }

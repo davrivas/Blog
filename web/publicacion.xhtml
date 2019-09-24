@@ -28,13 +28,14 @@
 
                         <h:outputText value="#{publicacionBlogController.publicacionSeleccionada.contenido}" escape="false" />
 
-                        <h:form prependId="false">
+                        <h:form prependId="false" rendered="#{sesionController.esAdministrador() or sesionController.esVisitante()}">
                             <div class="card mt-5">
                                 <div class="card-header">
                                     <h3><h:outputLabel for="comentario" value="Añadir comentario" /></h3>
                                 </div>
                                 <div class="card-body">
-                                    <h:inputTextarea id="comentario" class="form-control" value="" requiredMessage="Debe agregar algo para comentar" />
+                                    <!-- revisar los iconos -->
+                                    <h:inputTextarea id="comentario" value="#{publicacionBlogController.nuevoComentario.comentario}" requiredMessage="Debe agregar algo para comentar" />
                                     <h:message for="comentario" style="color: red;" />
                                 </div>
                                 <div class="card-footer">
@@ -50,20 +51,30 @@
                         <h:panelGroup rendered="#{not empty publicacionBlogController.publicacionSeleccionada.comentarioList}">
                             <h2>Comentarios <h:outputText value="(#{publicacionBlogController.publicacionSeleccionada.comentarioList.size()})" /></h2>
                             <ui:repeat value="#{publicacionBlogController.publicacionSeleccionada.comentarioList}" var="c">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3><h:outputText value="#{c.usuarioId.nombres} #{c.usuarioId.apellidos}" /></h3>
-                                        Publicado el <h:outputText value="#{c.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText><br />
+                                <h:panelGroup rendered="#{c.estado == 1}">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3><h:outputText value="#{c.usuarioId.nombres} #{c.usuarioId.apellidos}" /></h3>
+                                            <h:panelGrid rendered="#{publicacionBlogController.esAdministrador(c.usuarioId)}">
+                                                <a href="#"><strong><h:outputText value="Administrador" /></strong></a>
+                                            </h:panelGrid>
+                                        </div>
+                                        <div class="card-body">
+                                            <h:outputText value="#{c.comentario}" />
+                                        </div>
+                                        <div class="card-footer">
+                                            <em>Publicado el <h:outputText value="#{c.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText></em>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <h:outputText value="#{c.comentario}" />
-                                    </div>
-                                </div>
+                                </h:panelGroup>
                             </ui:repeat>
                         </h:panelGroup>
                     </div>
                 </div>
             </div>
         </article>
+    </ui:define>
+    <ui:define name="scripts">
+        <ui:include src="/WEB-INF/template/common/trumbowyg.xhtml" />
     </ui:define>
 </ui:composition>
