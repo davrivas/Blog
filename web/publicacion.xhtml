@@ -20,7 +20,7 @@
 
                         <h:form prependId="false">
                             <p>
-                                <em>Publicado por: </em> <h:outputText value="#{publicacionBlogController.publicacionSeleccionada.usuarioId.nombres} #{publicacionBlogController.publicacionSeleccionada.usuarioId.apellidos}" /><br/>
+                                <em>Publicado por: </em> <h:outputText value="#{publicacionBlogController.publicacionSeleccionada.usuarioId.obtenerNombreCompleto()}" /><br/>
                                 <em>Fecha de publicación: </em> <h:outputText value="#{publicacionBlogController.publicacionSeleccionada.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText><br />
                                 <em>Categoría: </em> <h:commandLink><h:outputText value="#{publicacionBlogController.publicacionSeleccionada.categoriaPublicacionId.nombre}" /></h:commandLink>
                             </p>
@@ -28,13 +28,31 @@
 
                         <h:outputText value="#{publicacionBlogController.publicacionSeleccionada.contenido}" escape="false" />
 
-                        <h:form prependId="false" rendered="#{sesionController.esAdministrador() or sesionController.esVisitante()}">
+                        <h:panelGroup rendered="#{empty sesionController.usuario}">
+                            <div class="card mt-5">
+                                <div class="card-header">
+                                    <h3>Comentar</h3>
+                                </div>
+                                <div class="card-body">
+                                    Para comentar se debe tener una cuenta para este blog
+                                </div>
+                                <div class="card-footer">
+                                    <a class="btn btn-primary mr-1" href="#{request.contextPath}/login.xhtml">
+                                        Iniciar sesión
+                                    </a>
+                                    <a class="btn btn-primary" href="#">
+                                        Registarse
+                                    </a>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                        
+                        <h:form prependId="false" rendered="#{not empty sesionController.usuario}">
                             <div class="card mt-5">
                                 <div class="card-header">
                                     <h3><h:outputLabel for="comentario" value="Añadir comentario" /></h3>
                                 </div>
                                 <div class="card-body">
-                                    <!-- revisar los iconos -->
                                     <h:inputTextarea id="comentario" value="#{publicacionBlogController.nuevoComentario.comentario}" requiredMessage="Debe agregar algo para comentar" />
                                     <h:message for="comentario" style="color: red;" />
                                 </div>
@@ -49,12 +67,12 @@
                         </h:panelGroup>
 
                         <h:panelGroup rendered="#{not empty publicacionBlogController.publicacionSeleccionada.comentarioList}">
-                            <h2>Comentarios <h:outputText value="(#{publicacionBlogController.publicacionSeleccionada.comentarioList.size()})" /></h2>
+                            <h2>Comentarios</h2>
                             <ui:repeat value="#{publicacionBlogController.publicacionSeleccionada.comentarioList}" var="c">
                                 <h:panelGroup rendered="#{c.estado == 1}">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3><h:outputText value="#{c.usuarioId.nombres} #{c.usuarioId.apellidos}" /></h3>
+                                            <h3><h:outputText value="#{c.usuarioId.obtenerNombreCompleto()}" /></h3>
                                             <h:panelGrid rendered="#{publicacionBlogController.esAdministrador(c.usuarioId)}">
                                                 <a href="#"><strong><h:outputText value="Administrador" /></strong></a>
                                             </h:panelGrid>
@@ -73,8 +91,5 @@
                 </div>
             </div>
         </article>
-    </ui:define>
-    <ui:define name="scripts">
-        <ui:include src="/WEB-INF/template/common/trumbowyg.xhtml" />
     </ui:define>
 </ui:composition>

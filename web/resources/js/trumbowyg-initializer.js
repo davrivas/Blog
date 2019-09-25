@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#contenido, #comentario').trumbowyg({
+    $('#contenido').trumbowyg({
         lang: 'es',
         btns: [
             ['viewHTML'],
@@ -8,7 +8,7 @@ $(document).ready(function () {
             ['strong', 'em', 'del'],
             ['superscript', 'subscript'],
             ['link'],
-            ['insertImage'],
+            //['insertImage'],
             ['upload'],
             ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
             ['unorderedList', 'orderedList'],

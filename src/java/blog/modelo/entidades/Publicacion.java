@@ -29,13 +29,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Publicacion.findAll", query = "SELECT p FROM Publicacion p")
     , @NamedQuery(name = "Publicacion.findById", query = "SELECT p FROM Publicacion p WHERE p.id = :id")
+    , @NamedQuery(name = "Publicacion.findByTitulo", query = "SELECT p FROM Publicacion p WHERE p.titulo = :titulo")
     , @NamedQuery(name = "Publicacion.findByFechaPublicacion", query = "SELECT p FROM Publicacion p WHERE p.fechaPublicacion = :fechaPublicacion")
     , @NamedQuery(name = "Publicacion.findByEstado", query = "SELECT p FROM Publicacion p WHERE p.estado = :estado")})
 public class Publicacion implements Serializable {
-
-    @Basic(optional = false)
-    @Column(name = "titulo")
-    private String titulo;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,6 +40,9 @@ public class Publicacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @Column(name = "titulo")
+    private String titulo;
     @Basic(optional = false)
     @Lob
     @Column(name = "contenido")
@@ -70,8 +70,9 @@ public class Publicacion implements Serializable {
         this.id = id;
     }
 
-    public Publicacion(Integer id, String contenido, Date fechaPublicacion, short estado) {
+    public Publicacion(Integer id, String titulo, String contenido, Date fechaPublicacion, short estado) {
         this.id = id;
+        this.titulo = titulo;
         this.contenido = contenido;
         this.fechaPublicacion = fechaPublicacion;
         this.estado = estado;
@@ -83,6 +84,14 @@ public class Publicacion implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getContenido() {
@@ -157,14 +166,6 @@ public class Publicacion implements Serializable {
     @Override
     public String toString() {
         return "blog.modelo.entidades.Publicacion[ id=" + id + " ]";
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
     }
 
 }

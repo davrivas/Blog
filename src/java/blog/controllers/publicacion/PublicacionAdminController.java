@@ -26,7 +26,7 @@ public class PublicacionAdminController implements Serializable {
 
     @Inject
     private SesionController sc;
-    
+
     @Inject
     private PublicacionBlogController pbc;
 
@@ -44,7 +44,6 @@ public class PublicacionAdminController implements Serializable {
     @PostConstruct
     public void init() {
         this.nuevaPublicacion = new Publicacion();
-        this.publicacionSeleccionada = new Publicacion();
     }
 
     public List<Publicacion> getPublicaciones() {
@@ -108,14 +107,32 @@ public class PublicacionAdminController implements Serializable {
 
     public String verDetallePublicacion(Publicacion p) throws IOException {
         this.pbc.setPublicacionSeleccionada(p);
-        
+
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
-        
+
         String path = ec.getRequestContextPath() + "/publicacion.xhtml";
-        
+
         scriptController.setScript("window.open('" + path + "', '_newtab')");
-        
+
+        return "";
+    }
+
+    public void seleccionarPublicacion(Publicacion p) {
+        this.publicacionSeleccionada = p;
+    }
+
+    public String eliminarPublicacion() {
+        try {
+            pf.remove(this.publicacionSeleccionada);
+            
+            this.publicacionSeleccionada = new Publicacion();
+            this.scriptController.setScript(MessageUtils.mostrarMensajeExito("Publicación eliminada satisfactoriamente"));
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+            this.scriptController.setScript(MessageUtils.mostrarMensajeExcepcion(ex));
+        }
+
         return "";
     }
 

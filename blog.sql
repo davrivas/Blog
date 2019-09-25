@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2019 at 04:51 AM
+-- Generation Time: Sep 25, 2019 at 03:01 AM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -78,7 +78,8 @@ CREATE TABLE `publicacion` (
 --
 
 INSERT INTO `publicacion` (`id`, `usuario_id`, `categoria_publicacion_id`, `titulo`, `contenido`, `fecha_publicacion`, `estado`) VALUES
-(2, 1, 1, 'Titulo', 'Ejemplo publicacion', '2019-09-19 20:00:00', 1);
+(3, 1, 1, 'Publicacion editada', '<p>Este un ejemplo de publicación.</p><p><img src=\"https://i.imgur.com/Pt6qsYF.jpg\" alt=\"roco\"><br></p><p>Este es otro <strong>párrafo,</strong> miremos si se <em>edita</em>.</p>', '2019-09-21 18:21:23', 1),
+(4, 1, 2, 'Concierto cristiano', 'Este 1 de octubre habrá un concierto de beneficiencia por los niños.\r\n\r\nEntradas en primera fila 465 67 45.', '2019-09-21 20:13:46', 0);
 
 -- --------------------------------------------------------
 
@@ -107,6 +108,7 @@ INSERT INTO `rol` (`id`, `nombre`) VALUES
 
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
+  `rol_id` int(11) NOT NULL,
   `nombres` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
   `apellidos` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `correo` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
@@ -117,27 +119,8 @@ CREATE TABLE `usuario` (
 -- Dumping data for table `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `nombres`, `apellidos`, `correo`, `clave`) VALUES
-(1, 'Andres', 'Bustos', 'andresbustos@gmail.com', 'andres');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `usuario_has_rol`
---
-
-CREATE TABLE `usuario_has_rol` (
-  `usuario_id` int(11) NOT NULL,
-  `rol_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Dumping data for table `usuario_has_rol`
---
-
-INSERT INTO `usuario_has_rol` (`usuario_id`, `rol_id`) VALUES
-(1, 1),
-(1, 2);
+INSERT INTO `usuario` (`id`, `rol_id`, `nombres`, `apellidos`, `correo`, `clave`) VALUES
+(1, 1, 'Andres', 'Bustos', 'andresbustos@gmail.com', 'andres');
 
 --
 -- Indexes for dumped tables
@@ -176,15 +159,8 @@ ALTER TABLE `rol`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `correo_UNIQUE` (`correo`);
-
---
--- Indexes for table `usuario_has_rol`
---
-ALTER TABLE `usuario_has_rol`
-  ADD PRIMARY KEY (`usuario_id`,`rol_id`),
-  ADD KEY `fk_usuario_has_rol_rol1_idx` (`rol_id`),
-  ADD KEY `fk_usuario_has_rol_usuario1_idx` (`usuario_id`);
+  ADD UNIQUE KEY `correo_UNIQUE` (`correo`),
+  ADD KEY `fk_usuario_rol1_idx` (`rol_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -206,7 +182,7 @@ ALTER TABLE `comentario`
 -- AUTO_INCREMENT for table `publicacion`
 --
 ALTER TABLE `publicacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `rol`
@@ -239,11 +215,10 @@ ALTER TABLE `publicacion`
   ADD CONSTRAINT `fk_publicaciones_usuarios1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `usuario_has_rol`
+-- Constraints for table `usuario`
 --
-ALTER TABLE `usuario_has_rol`
-  ADD CONSTRAINT `fk_usuario_has_rol_rol1` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_usuario_has_rol_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `fk_usuario_rol1` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

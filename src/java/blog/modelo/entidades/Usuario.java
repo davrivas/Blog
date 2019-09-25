@@ -1,5 +1,6 @@
 package blog.modelo.entidades;
 
+import blog.utils.UsuarioUtils;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -10,7 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -48,8 +50,9 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "clave")
     private String clave;
-    @ManyToMany(mappedBy = "usuarioList", fetch = FetchType.EAGER)
-    private List<Rol> rolList;
+    @JoinColumn(name = "rol_id", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Rol rolId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioId", fetch = FetchType.EAGER)
     private List<Comentario> comentarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioId", fetch = FetchType.EAGER)
@@ -110,13 +113,12 @@ public class Usuario implements Serializable {
         this.clave = clave;
     }
 
-    @XmlTransient
-    public List<Rol> getRolList() {
-        return rolList;
+    public Rol getRolId() {
+        return rolId;
     }
 
-    public void setRolList(List<Rol> rolList) {
-        this.rolList = rolList;
+    public void setRolId(Rol rolId) {
+        this.rolId = rolId;
     }
 
     @XmlTransient
@@ -160,6 +162,10 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "blog.modelo.entidades.Usuario[ id=" + id + " ]";
+    }
+    
+    public String obtenerNombreCompleto() {
+        return UsuarioUtils.obtenerNombreCompleto(this);
     }
 
 }

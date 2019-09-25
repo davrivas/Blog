@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/admin/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:define name="title">Usuarios</ui:define>
+    <ui:define name="content">
+        <a class="btn btn-primary mb-5" href="#{request.contextPath}/admin/nuevo-usuario.xhtml">
+            <span class="fa fa-plus"></span> Crear usuario
+        </a>
+
+        <h:form prependId="false" rendered="#{not empty usuarioAdminController.usuarios}">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Apellidos</th>
+                            <th>Nombres</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Apellidos</th>
+                            <th>Nombres</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <ui:repeat value="#{usuarioAdminController.usuarios}" var="u">
+                            <tr>
+                                <td><h:outputText value="#{u.apellidos}" /></td>
+                                <td><h:outputText value="#{u.nombres}" /></td>
+                                <td><h:outputText value="#{u.correo}" /></td>
+                                <td><h:outputText value="#{u.rolId.nombre}" style="#{usuarioAdminController.getRolColor(u)}" /></td>
+                                <td>
+                                    <h:commandLink title="Editar" class="btn btn-warning ml-1 mr-1" action="#{usuarioAdminController.verEditarUsuario(u)}">
+                                        <span class="fa fa-edit"></span>
+                                    </h:commandLink>
+                                    <h:commandLink title="Eliminar" class="btn btn-danger" actionListener="#{usuarioAdminController.seleccionarUsuario(u)}" a:data-toggle="modal" a:data-target="#modalUsuario">
+                                        <f:ajax render=":modalUsuarioEliminado" />
+                                        <span class="fa fa-trash"></span>
+                                    </h:commandLink>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </tbody>
+                </table>
+            </div>
+        </h:form>
+
+        <h:panelGroup rendered="#{empty usuarioAdminController.usuarios}">
+            <p class="text-center"><em>No hay usuarios</em></p>
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="modals">
+        <ui:include src="/WEB-INF/template/admin/eliminar-usuario.xhtml" />
+    </ui:define>
+</ui:composition>

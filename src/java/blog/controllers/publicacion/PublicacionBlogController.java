@@ -8,15 +8,16 @@ import blog.modelo.entidades.Comentario;
 import blog.modelo.entidades.Publicacion;
 import blog.modelo.entidades.Usuario;
 import blog.utils.UsuarioUtils;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 
 @Named(value="publicacionBlogController")
-@ApplicationScoped
-public class PublicacionBlogController {
+@SessionScoped
+public class PublicacionBlogController implements Serializable {
 
     @EJB
     private PublicacionFacade pf;
@@ -34,13 +35,13 @@ public class PublicacionBlogController {
     private CategoriaPublicacion categoriaPublicacionSeleccionada;
     private Comentario nuevoComentario;
     
+    private String busqueda;
+    
     public PublicacionBlogController() {
     }
     
     @PostConstruct
     public void init() {
-        this.publicacionSeleccionada = new Publicacion();
-        this.categoriaPublicacionSeleccionada = new CategoriaPublicacion();
         this.nuevoComentario = new Comentario();
     }
 
@@ -82,10 +83,23 @@ public class PublicacionBlogController {
     public void setNuevoComentario(Comentario nuevoComentario) {
         this.nuevoComentario = nuevoComentario;
     }
+
+    public String getBusqueda() {
+        return busqueda;
+    }
+
+    public void setBusqueda(String busqueda) {
+        this.busqueda = busqueda;
+    }    
     
     public String seleccionarPublicacion(Publicacion p) {
         this.publicacionSeleccionada = p;
         return "publicacion.xhtml?faces-redirect=true";
+    }
+    
+    public String buscarPublicaciones() {
+        // facade que busque
+        return "";
     }
     
     public String mostrarComentarios(List<Comentario> comentarios) {

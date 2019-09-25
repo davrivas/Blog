@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <div class="modal fade" id="modalUsuario" tabindex="-1" role="dialog" aria-labelledby="modalUsuarioLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <h:panelGroup id="modalUsuarioEliminado" class="modal-content" layout="block">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalUsuarioLabel">¿Desea eliminar este usuario?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h:panelGroup rendered="#{not empty usuarioAdminController.usuarioSeleccionado}">
+                        <p><strong>Nombre completo: </strong> <h:outputText value="#{usuarioAdminController.usuarioSeleccionado.obtenerNombreCompleto()}" /></p>
+                        <p><strong>Correo electrónico: </strong> <h:outputText value="#{usuarioAdminController.usuarioSeleccionado.correo}" /></p>
+                        <p><strong>Rol: </strong> <h:outputText value="#{usuarioAdminController.usuarioSeleccionado.rolId.nombre}" style="#{usuarioAdminController.getRolColor(usuarioAdminController.usuarioSeleccionado)}" /></p>
+                    </h:panelGroup>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <h:form prependId="false">
+                        <h:commandButton class="btn btn-danger" action="#{usuarioAdminController.eliminarUsuario()}" value="Eliminar usuario" />
+                    </h:form>
+                </div>
+            </h:panelGroup>
+        </div>
+    </div>
+</ui:composition>
+

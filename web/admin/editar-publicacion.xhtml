@@ -23,21 +23,23 @@
                 <h:inputTextarea id="contenido" required="true" value="#{publicacionAdminController.publicacionSeleccionada.contenido}" requiredMessage="Debe ingresar el contenido de la publicación" />
                 <h:message for="contenido" style="color: red;" />
             </div>
-            <div class="form-group">
-                <h:outputLabel for="categoriaPublicacion">Categoría</h:outputLabel>
-                <h:selectOneMenu id="categoriaPublicacion" required="true" value="#{publicacionAdminController.publicacionSeleccionada.categoriaPublicacionId}" class="form-control" requiredMessage="Debe seleccionar una categoria para la publicación">
-                    <f:selectItem itemLabel="Seleccione una categoría" />
-                    <f:selectItems value="#{categoriaPublicacionController.categorias}" var="c" itemLabel="#{c.nombre}" />
-                </h:selectOneMenu>
-                <h:message for="categoriaPublicacion" style="color: red;" />
-            </div>
-            <div class="form-group">
-                <h:outputLabel for="estado">Estado</h:outputLabel>
-                <h:selectOneRadio id="estado" required="true" value="#{publicacionAdminController.publicacionSeleccionada.estado}" requiredMessage="Debe seleccionar un estado para la publicación">
-                    <f:selectItem itemValue="1" itemLabel="Activo" />
-                    <f:selectItem itemValue="0" itemLabel="Inactivo" />
-                </h:selectOneRadio>
-                <h:message for="estado" style="color: red;" />
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <h:outputLabel for="categoriaPublicacion">Categoría</h:outputLabel>
+                    <h:selectOneMenu id="categoriaPublicacion" required="true" value="#{publicacionAdminController.publicacionSeleccionada.categoriaPublicacionId}" class="form-control" requiredMessage="Debe seleccionar una categoria para la publicación">
+                        <f:selectItem itemLabel="Seleccione una categoría" />
+                        <f:selectItems value="#{categoriaPublicacionController.categorias}" var="c" itemLabel="#{c.nombre}" />
+                    </h:selectOneMenu>
+                    <h:message for="categoriaPublicacion" style="color: red;" />
+                </div>
+                <div class="form-group col-md-6">
+                    <h:outputLabel for="estado">Estado</h:outputLabel>
+                    <h:selectOneRadio id="estado" required="true" value="#{publicacionAdminController.publicacionSeleccionada.estado}" requiredMessage="Debe seleccionar un estado para la publicación">
+                        <f:selectItem itemValue="1" itemLabel="Activo" />
+                        <f:selectItem itemValue="0" itemLabel="Inactivo" />
+                    </h:selectOneRadio>
+                    <h:message for="estado" style="color: red;" />
+                </div>
             </div>
             <div class="form-row">
                 <h:commandLink class="btn btn-warning mr-1" action="#{publicacionAdminController.editarPublicacion()}" type="submit">

@@ -1,6 +1,7 @@
 package blog.modelo.dao;
 
 import blog.modelo.entidades.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +20,22 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
 
     public UsuarioFacade() {
         super(Usuario.class);
+    }
+    
+    @Override
+    public List<Usuario> findAll() {
+        List<Usuario> usuarios = null;
+        
+        try {
+            TypedQuery<Usuario> tq = getEntityManager().createQuery("SELECT u "
+                    + "FROM Usuario u "
+                    + "ORDER BY u.apellidos", Usuario.class);
+            usuarios = tq.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+        }
+        
+        return usuarios;
     }
 
     public Usuario iniciarSesion(String correo, String clave) {

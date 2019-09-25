@@ -35,13 +35,11 @@ public class SesionController implements Serializable {
 
     @PostConstruct
     public void init() {
-        //this.usuario = new Usuario();
-        this.usuario = this.uf.find(1);
+        //this.usuario = this.uf.find(1);
     }
 
     public Usuario getUsuario() {
         return usuario;
-        //return uf.find(1);
     }
 
     public void setUsuario(Usuario usuario) {
@@ -69,24 +67,23 @@ public class SesionController implements Serializable {
             this.usuario = uf.iniciarSesion(this.correo, this.clave);
 
             if (this.usuario == null) {
-                sc.setScript(MessageUtils.mostrarMensajeError("Usuario no existe"));
+                sc.setScript(MessageUtils.mostrarMensajeError("Usuario no existe o las credenciales están mal escritas"));
                 return "";
             }
 
-            String nombreUsuario = this.usuario.getNombres() + " " + this.usuario.getApellidos();
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ExternalContext ec = fc.getExternalContext();
 
-            if (esAdministrador()) {
-                sc.setScript(MessageUtils.mostrarMensajeExito("Bienvenido administrador " + nombreUsuario));
-                return "/admin/index.xhtml?faces-redirect=true";
+            switch (this.usuario.getRolId().getId()) {
+                case Constantes.ADMINISTRADOR_ID:
+                    sc.setScript(MessageUtils.mostrarMensajeExito("Bienvenido administrador " + this.usuario.obtenerNombreCompleto()));
+                    return ec.getRequestContextPath() + "/admin/index.xhtml?faces-redirect=true";
+                case Constantes.VISITANTE_ID:
+                    sc.setScript(MessageUtils.mostrarMensajeExito("Bienvenido " + this.usuario.obtenerNombreCompleto()));
+                    return ec.getRequestContextPath() + "/index.xhtml?faces-redirect=true";
+                default:
+                    throw new Exception("El usuario no tiene rol asignado.");
             }
-
-            if (esVisitante()) {
-                sc.setScript(MessageUtils.mostrarMensajeExito("Bienvenido " + nombreUsuario));
-                return "";
-            }
-
-            sc.setScript(MessageUtils.mostrarMensajeError("Usuario no tiene roles asociados"));
-            return "";
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
             sc.setScript(MessageUtils.mostrarMensajeExcepcion(ex));

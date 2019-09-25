@@ -15,10 +15,14 @@ public class UsuarioUtils {
     private static boolean validarRol(Usuario usuario, int rolId) {
         if (usuario == null)
             return false;
-
-        if (usuario.getRolList() == null || usuario.getRolList().isEmpty())
+        
+        if (usuario.getRolId() == null)
             return false;
 
-        return usuario.getRolList().stream().anyMatch((rol) -> (rol.getId() == rolId));
+        return usuario.getRolId().getId() == rolId;
+    }
+    
+    public static String obtenerNombreCompleto(Usuario usuario) {
+        return usuario.getNombres() + " " + usuario.getApellidos();
     }
 }
