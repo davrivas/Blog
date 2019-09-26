@@ -44,7 +44,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         try {
             TypedQuery<Usuario> tq = getEntityManager().createQuery("SELECT u "
                     + "FROM Usuario u "
-                    + "WHERE u.correo = :correo and u.clave = :clave", Usuario.class);
+                    + "WHERE u.correo = :correo AND u.clave = :clave", Usuario.class);
             tq.setParameter("correo", correo);
             tq.setParameter("clave", clave);
             usuario = tq.getSingleResult();

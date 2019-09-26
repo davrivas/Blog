@@ -21,6 +21,7 @@
                             <th>Categoría</th>
                             <th>Autor</th>
                             <th>Título</th>
+                            <th># comentarios</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -31,6 +32,7 @@
                             <th>Categoría</th>
                             <th>Autor</th>
                             <th>Título</th>
+                            <th># comentarios</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -43,15 +45,10 @@
                                         <f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" />
                                     </h:outputText>
                                 </td>
-                                <td>
-                                    <h:outputText value="#{p.categoriaPublicacionId.nombre}" />
-                                </td>
-                                <td>
-                                    <h:outputText value="#{p.usuarioId.obtenerNombreCompleto()}" />
-                                </td>
-                                <td>
-                                    <h:outputText value="#{p.titulo}" />
-                                </td>
+                                <td><h:outputText value="#{p.categoriaPublicacionId.nombre}" /></td>
+                                <td><h:outputText value="#{p.usuarioId.nombreCompleto}" /></td>
+                                <td><h:outputText value="#{p.titulo}" /></td>
+                                <td><h:outputText value="#{comentarioController.getCantidadComentarios(p.comentarioList)}" /></td>
                                 <td>
                                     <h:outputText rendered="#{p.estado == 1}" value="Activo" style="color: green;" />
                                     <h:outputText rendered="#{p.estado == 0}" value="Inactivo" style="color: red;" />

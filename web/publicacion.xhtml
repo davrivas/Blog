@@ -12,17 +12,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-md-10 mx-auto">
-                        <a href="#{request.contextPath}/index.xhtml" class="btn btn-secondary mb-3">
+                        <button type="button" class="btn btn-secondary mb-3" onclick="history.back()">
                             <i class="fa fa-back"></i> Atrás
-                        </a>
+                        </button>
 
                         <h1><h:outputText value="#{publicacionBlogController.publicacionSeleccionada.titulo}" /></h1>
 
                         <h:form prependId="false">
                             <p>
-                                <em>Publicado por: </em> <h:outputText value="#{publicacionBlogController.publicacionSeleccionada.usuarioId.obtenerNombreCompleto()}" /><br/>
+                                <em>Publicado por: </em> <h:outputText value="#{publicacionBlogController.publicacionSeleccionada.usuarioId.nombreCompleto}" /><br/>
                                 <em>Fecha de publicación: </em> <h:outputText value="#{publicacionBlogController.publicacionSeleccionada.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText><br />
-                                <em>Categoría: </em> <h:commandLink><h:outputText value="#{publicacionBlogController.publicacionSeleccionada.categoriaPublicacionId.nombre}" /></h:commandLink>
+                                <em>Categoría: </em> <h:commandLink title="Ver #{publicacionBlogController.publicacionSeleccionada.categoriaPublicacionId.nombrePlural}"><h:outputText value="#{publicacionBlogController.publicacionSeleccionada.categoriaPublicacionId.nombre}" /></h:commandLink>
                             </p>
                         </h:form>
 
@@ -37,7 +37,7 @@
                                     Para comentar se debe tener una cuenta para este blog
                                 </div>
                                 <div class="card-footer">
-                                    <a class="btn btn-primary mr-1" href="#{request.contextPath}/login.xhtml">
+                                    <a class="btn btn-primary mr-1" href="#{request.contextPath}/iniciar-sesion.xhtml">
                                         Iniciar sesión
                                     </a>
                                     <a class="btn btn-primary" href="#">
@@ -53,11 +53,11 @@
                                     <h3><h:outputLabel for="comentario" value="Añadir comentario" /></h3>
                                 </div>
                                 <div class="card-body">
-                                    <h:inputTextarea id="comentario" value="#{publicacionBlogController.nuevoComentario.comentario}" requiredMessage="Debe agregar algo para comentar" />
+                                    <h:inputTextarea id="comentario" class="form-control" value="#{publicacionBlogController.nuevoComentario.comentario}" requiredMessage="Debe agregar algo para comentar" />
                                     <h:message for="comentario" style="color: red;" />
                                 </div>
                                 <div class="card-footer">
-                                    <h:commandButton type="submit" class="btn btn-primary" value="Comentar" />
+                                    <h:commandButton type="submit" class="btn btn-primary" value="Comentar" action="#{publicacionBlogController.agregarComentario()}" />
                                 </div>
                             </div>
                         </h:form>
@@ -67,21 +67,16 @@
                         </h:panelGroup>
 
                         <h:panelGroup rendered="#{not empty publicacionBlogController.publicacionSeleccionada.comentarioList}">
-                            <h2>Comentarios</h2>
+                            <h2 class="mt-5">Comentarios</h2>
                             <ui:repeat value="#{publicacionBlogController.publicacionSeleccionada.comentarioList}" var="c">
                                 <h:panelGroup rendered="#{c.estado == 1}">
-                                    <div class="card">
+                                    <div class="card mb-1">
                                         <div class="card-header">
-                                            <h3><h:outputText value="#{c.usuarioId.obtenerNombreCompleto()}" /></h3>
-                                            <h:panelGrid rendered="#{publicacionBlogController.esAdministrador(c.usuarioId)}">
-                                                <a href="#"><strong><h:outputText value="Administrador" /></strong></a>
-                                            </h:panelGrid>
+                                            <strong><h:outputText value="#{c.usuarioId.nombreCompleto} " /></strong> <em><h:outputText rendered="#{c.usuarioId.esAdministrador()}" value="Administrador" style="color: green" /></em><br />
+                                            <h:outputText value="#{c.fechaPublicacion}" style="font-size: 13px;"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText>
                                         </div>
                                         <div class="card-body">
                                             <h:outputText value="#{c.comentario}" />
-                                        </div>
-                                        <div class="card-footer">
-                                            <em>Publicado el <h:outputText value="#{c.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText></em>
                                         </div>
                                     </div>
                                 </h:panelGroup>

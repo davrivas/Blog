@@ -2,6 +2,7 @@ package blog.modelo.dao;
 
 import blog.modelo.entidades.CategoriaPublicacion;
 import blog.modelo.entidades.Publicacion;
+import blog.modelo.entidades.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -64,6 +65,23 @@ public class PublicacionFacade extends AbstractFacade<Publicacion> {
                     + "WHERE p.categoriaPublicacionId = :categoria AND p.estado = 1 "
                     + "ORDER BY p.fechaPublicacion DESC", Publicacion.class);
             tq.setParameter("categoria", categoria);
+            publicaciones = tq.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+        }
+        
+        return publicaciones;
+    }
+    
+    public List<Publicacion> findAllPorAutor(Usuario autor) {
+        List<Publicacion> publicaciones = null;
+        
+        try {
+            TypedQuery<Publicacion> tq = getEntityManager().createQuery("SELECT p "
+                    + "FROM Publicacion p "
+                    + "WHERE p.usuarioId = :autor AND p.estado = 1 "
+                    + "ORDER BY p.fechaPublicacion DESC", Publicacion.class);
+            tq.setParameter("autor", autor);
             publicaciones = tq.getResultList();
         } catch (Exception ex) {
             ex.printStackTrace(System.err);

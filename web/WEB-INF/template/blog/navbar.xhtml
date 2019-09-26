@@ -7,7 +7,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand" href="index.html">Blog</a>
+            <a class="navbar-brand" href="#{request.contextPath}/index.xhtml">Blog</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars"></i>
@@ -19,15 +19,14 @@
                     </li>
                     <ui:repeat value="#{categoriaPublicacionController.categorias}" var="c">
                         <li class="nav-item">
-                            <!-- ponerlos en plural -->
-                            <a class="nav-link" href="#">#{c.nombre}</a>
+                            <a class="nav-link" href="#">#{c.nombrePlural}</a>
                         </li>
                     </ui:repeat>
                     <li class="nav-item">
-                        <h:form prependId="false">
-                            <h:inputText a:placeholder="Buscar en el blog" value="#{publicacionBlogController.busqueda}" />
-                            <h:commandLink action="#{publicacionBlogController.buscarPublicaciones()}">
-                                <span class="fa fa-search"></span>
+                        <h:form prependId="false" class="d-flex flex-row">
+                            <h:inputText class="form-control form-control-sm mr-1" a:placeholder="Buscar en el blog" value="#{publicacionBlogController.busqueda}" />
+                            <h:commandLink class="btn btn-primary btn-sm" action="#{publicacionBlogController.buscarPublicaciones()}" style="padding: 0px 5px; display: flex; align-items: center;">
+                                <span class="fa fa-1x fa-search"></span>
                             </h:commandLink>
                         </h:form>
                     </li>
@@ -41,6 +40,11 @@
                     </h:panelGroup>
                     <h:panelGroup rendered="#{not empty sesionController.usuario}">
                         <!-- o hacerlo dropdown -->
+                        <h:panelGroup rendered="#{sesionController.usuario.esAdministrador()}">
+                        <li class="nav-item">
+                            <a class="nav-link" title="Ir al panel de administración" href="#{request.contextPath}/admin/index.xhtml" target="_blank">Admin</a>
+                        </li>
+                    </h:panelGroup>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Cerrar sesión</a>
                         </li>

@@ -6,7 +6,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-    <ui:define name="title">Login</ui:define>
+    <ui:define name="title">Iniciar sesión</ui:define>
     <ui:define name="content">
         <!-- Main Content -->
         <div class="container mt-3">
@@ -18,14 +18,14 @@
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls">
                                 <h:outputLabel for="email" value="Correo" />
-                                <h:inputText class="form-control" a:placeholder="Correo" id="email" required="true" requiredMessage="Escriba su correo" />
+                                <h:inputText value="#{sesionController.correo}" class="form-control" a:placeholder="Correo" id="email" required="true" requiredMessage="Escriba su correo" />
                                 <h:message for="email" style="color: red;" />
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls">
                                 <h:outputLabel for="clave" value="Clave" />
-                                <h:inputSecret class="form-control" a:placeholder="Clave" id="clave" required="true" requiredMessage="Escriba su clave" />
+                                <h:inputSecret value="#{sesionController.clave}" class="form-control" a:placeholder="Clave" id="clave" required="true" requiredMessage="Escriba su clave" />
                                 <h:message for="clave" style="color: red;" />
                             </div>
                         </div>

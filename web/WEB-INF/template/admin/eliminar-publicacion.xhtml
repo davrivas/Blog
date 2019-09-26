@@ -13,13 +13,10 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <h:panelGroup rendered="#{publicacionAdminController.publicacionSeleccionada}">
-                        <p><strong>Título: </strong> <h:outputText value="#{publicacionAdminController.publicacionSeleccionada.titulo}" /></p>
-                        <p><strong>Autor: </strong> <h:outputText value="#{publicacionAdminController.publicacionSeleccionada.usuarioId.obtenerNombreCompleto()}" /></p>
-                        <p><strong>Categoría: </strong> <h:outputText value="#{publicacionAdminController.publicacionSeleccionada.categoriaPublicacionId.nombre}" /></p>
-                        <p><strong>Fecha de publicación: </strong> <h:outputText value="#{publicacionAdminController.publicacionSeleccionada.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText></p>
-                    </h:panelGroup>
+                <div class="modal-body"><p><strong>Título: </strong> <h:outputText value="#{publicacionAdminController.publicacionSeleccionada.titulo}" /></p>
+                    <p><strong>Autor: </strong> <h:outputText value="#{publicacionAdminController.publicacionSeleccionada.usuarioId.nombreCompleto}" /></p>
+                    <p><strong>Categoría: </strong> <h:outputText value="#{publicacionAdminController.publicacionSeleccionada.categoriaPublicacionId.nombre}" /></p>
+                    <p><strong>Fecha de publicación: </strong> <h:outputText value="#{publicacionAdminController.publicacionSeleccionada.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText></p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>

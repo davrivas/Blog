@@ -5,7 +5,6 @@ import blog.controllers.script.ScriptController;
 import blog.modelo.dao.UsuarioFacade;
 import blog.modelo.entidades.Usuario;
 import blog.utils.MessageUtils;
-import blog.utils.UsuarioUtils;
 import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -35,7 +34,7 @@ public class SesionController implements Serializable {
 
     @PostConstruct
     public void init() {
-        //this.usuario = this.uf.find(1);
+        //this.usuario = this.uf.find(2);
     }
 
     public Usuario getUsuario() {
@@ -65,22 +64,22 @@ public class SesionController implements Serializable {
     public String iniciarSesion() {
         try {
             this.usuario = uf.iniciarSesion(this.correo, this.clave);
+            
+            this.correo = null;
+            this.clave = null;
 
             if (this.usuario == null) {
                 sc.setScript(MessageUtils.mostrarMensajeError("Usuario no existe o las credenciales están mal escritas"));
                 return "";
             }
 
-            FacesContext fc = FacesContext.getCurrentInstance();
-            ExternalContext ec = fc.getExternalContext();
-
             switch (this.usuario.getRolId().getId()) {
                 case Constantes.ADMINISTRADOR_ID:
-                    sc.setScript(MessageUtils.mostrarMensajeExito("Bienvenido administrador " + this.usuario.obtenerNombreCompleto()));
-                    return ec.getRequestContextPath() + "/admin/index.xhtml?faces-redirect=true";
+                    sc.setScript(MessageUtils.mostrarMensajeExito("Bienvenido administrador " + this.usuario.getNombreCompleto()));
+                    return "/admin/index.xhtml?faces-redirect=true";
                 case Constantes.VISITANTE_ID:
-                    sc.setScript(MessageUtils.mostrarMensajeExito("Bienvenido " + this.usuario.obtenerNombreCompleto()));
-                    return ec.getRequestContextPath() + "/index.xhtml?faces-redirect=true";
+                    sc.setScript(MessageUtils.mostrarMensajeExito("Bienvenido " + this.usuario.getNombreCompleto()));
+                    return "index.xhtml?faces-redirect=true";
                 default:
                     throw new Exception("El usuario no tiene rol asignado.");
             }
@@ -100,14 +99,6 @@ public class SesionController implements Serializable {
         ec.invalidateSession();
         String path = ec.getRequestContextPath() + "/index.xhtml";
         ec.redirect(path);
-    }
-
-    public boolean esAdministrador() {
-        return UsuarioUtils.esAdministrador(this.usuario);
-    }
-
-    public boolean esVisitante() {
-        return UsuarioUtils.esVisitante(this.usuario);
     }
 
 }

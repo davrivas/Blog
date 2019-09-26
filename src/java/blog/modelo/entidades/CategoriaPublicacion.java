@@ -26,6 +26,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "CategoriaPublicacion.findByNombre", query = "SELECT c FROM CategoriaPublicacion c WHERE c.nombre = :nombre")})
 public class CategoriaPublicacion implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "nombre_plural")
+    private String nombrePlural;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -98,6 +102,14 @@ public class CategoriaPublicacion implements Serializable {
     @Override
     public String toString() {
         return "blog.modelo.entidades.CategoriaPublicacion[ id=" + id + " ]";
+    }
+
+    public String getNombrePlural() {
+        return nombrePlural;
+    }
+
+    public void setNombrePlural(String nombrePlural) {
+        this.nombrePlural = nombrePlural;
     }
 
 }

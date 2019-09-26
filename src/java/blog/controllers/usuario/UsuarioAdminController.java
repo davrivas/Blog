@@ -135,9 +135,9 @@ public class UsuarioAdminController implements Serializable {
 
         String color = "color: ";
 
-        if (UsuarioUtils.esAdministrador(usuario)) {
+        if (usuario.esAdministrador()) {
             color += "green;";
-        } else if (UsuarioUtils.esVisitante(usuario)) {
+        } else if (usuario.esVisitante()) {
             color += "purple;";
         } else {
             color = "";

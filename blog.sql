@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2019 at 03:01 AM
+-- Generation Time: Sep 26, 2019 at 05:25 AM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -30,17 +30,18 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categoria_publicacion` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(25) COLLATE utf8_spanish_ci NOT NULL
+  `nombre` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre_plural` varchar(25) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Dumping data for table `categoria_publicacion`
 --
 
-INSERT INTO `categoria_publicacion` (`id`, `nombre`) VALUES
-(1, 'Noticia'),
-(2, 'Evento'),
-(3, 'Discusión');
+INSERT INTO `categoria_publicacion` (`id`, `nombre`, `nombre_plural`) VALUES
+(1, 'Noticia', 'Noticias'),
+(2, 'Evento', 'Eventos'),
+(3, 'Discusión', 'Discusiones');
 
 -- --------------------------------------------------------
 
@@ -56,6 +57,14 @@ CREATE TABLE `comentario` (
   `fecha_publicacion` datetime NOT NULL,
   `estado` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `comentario`
+--
+
+INSERT INTO `comentario` (`id`, `usuario_id`, `publicacion_id`, `comentario`, `fecha_publicacion`, `estado`) VALUES
+(1, 1, 3, 'Que buen articulo!', '2019-09-25 20:39:40', 1),
+(2, 2, 3, 'Me gustó este artículo, recomendadísimo.', '2019-09-25 20:53:10', 1);
 
 -- --------------------------------------------------------
 
@@ -120,7 +129,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `rol_id`, `nombres`, `apellidos`, `correo`, `clave`) VALUES
-(1, 1, 'Andres', 'Bustos', 'andresbustos@gmail.com', 'andres');
+(1, 1, 'Andres', 'Bustos', 'andresbustos@gmail.com', 'andres'),
+(2, 2, 'David', 'Rivas', 'd.rivas95@hotmail.com', 'david');
 
 --
 -- Indexes for dumped tables
@@ -176,13 +186,13 @@ ALTER TABLE `categoria_publicacion`
 -- AUTO_INCREMENT for table `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `publicacion`
 --
 ALTER TABLE `publicacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `rol`
@@ -194,7 +204,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

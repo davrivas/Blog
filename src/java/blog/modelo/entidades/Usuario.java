@@ -164,8 +164,16 @@ public class Usuario implements Serializable {
         return "blog.modelo.entidades.Usuario[ id=" + id + " ]";
     }
     
-    public String obtenerNombreCompleto() {
+    public String getNombreCompleto() {
         return UsuarioUtils.obtenerNombreCompleto(this);
+    }
+    
+    public boolean esAdministrador() {
+        return UsuarioUtils.esAdministrador(this);
+    }
+    
+    public boolean esVisitante() {
+        return UsuarioUtils.esVisitante(this);
     }
 
 }

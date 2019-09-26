@@ -12,12 +12,9 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <h:panelGroup rendered="#{not empty usuarioAdminController.usuarioSeleccionado}">
-                        <p><strong>Nombre completo: </strong> <h:outputText value="#{usuarioAdminController.usuarioSeleccionado.obtenerNombreCompleto()}" /></p>
-                        <p><strong>Correo electrónico: </strong> <h:outputText value="#{usuarioAdminController.usuarioSeleccionado.correo}" /></p>
-                        <p><strong>Rol: </strong> <h:outputText value="#{usuarioAdminController.usuarioSeleccionado.rolId.nombre}" style="#{usuarioAdminController.getRolColor(usuarioAdminController.usuarioSeleccionado)}" /></p>
-                    </h:panelGroup>
+                <div class="modal-body"><p><strong>Nombre completo: </strong> <h:outputText value="#{usuarioAdminController.usuarioSeleccionado.nombreCompleto}" /></p>
+                    <p><strong>Correo electrónico: </strong> <h:outputText value="#{usuarioAdminController.usuarioSeleccionado.correo}" /></p>
+                    <p><strong>Rol: </strong> <h:outputText value="#{usuarioAdminController.usuarioSeleccionado.rolId.nombre}" style="#{usuarioAdminController.getRolColor(usuarioAdminController.usuarioSeleccionado)}" /></p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>

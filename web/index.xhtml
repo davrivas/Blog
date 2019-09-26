@@ -38,9 +38,9 @@
                                     </h3> -->
                                 </h:commandLink>
                                 <p class="post-meta">
-                                    Publicado por <strong><h:outputLabel value="#{p.usuarioId.obtenerNombreCompleto()}" /></strong> el <h:outputText value="#{p.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText><br/>
-                                    Categoría: <h:commandLink action="#{publicacionBlogController.seleccionarPublicacion(p)}"><h:outputText value=" #{p.categoriaPublicacionId.nombre}" /></h:commandLink><br />
-                                    <h:outputText value="#{publicacionBlogController.mostrarComentarios(p.comentarioList)}" escape="false" />
+                                    Publicado por <strong><h:outputLabel value="#{p.usuarioId.getNombreCompleto()}" /></strong> el <h:outputText value="#{p.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText><br/>
+                                    Categoría: <h:commandLink title="Ver #{p.categoriaPublicacionId.nombrePlural}"><h:outputText value=" #{p.categoriaPublicacionId.nombre}" /></h:commandLink><br />
+                                    <h:outputText value="#{comentarioController.mostrarComentarios(p.comentarioList)}" escape="false" />
                                 </p>
                             </div>
                             <hr />
