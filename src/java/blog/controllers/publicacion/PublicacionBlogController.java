@@ -1,5 +1,6 @@
 package blog.controllers.publicacion;
 
+import blog.constantes.Constantes;
 import blog.controllers.script.ScriptController;
 import blog.controllers.sesion.SesionController;
 import blog.modelo.dao.CategoriaPublicacionFacade;
@@ -10,7 +11,6 @@ import blog.modelo.entidades.Comentario;
 import blog.modelo.entidades.Publicacion;
 import blog.modelo.entidades.Usuario;
 import blog.utils.MessageUtils;
-import blog.utils.UsuarioUtils;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -40,11 +40,18 @@ public class PublicacionBlogController implements Serializable {
     private ScriptController scriptController;
     
     private List<Publicacion> publicaciones;
-    private List<Publicacion> publicacionesPorTipo;
+    private List<Publicacion> publicacionesBuscadas;
+    private List<Publicacion> publicacionesPorAutor;
+    private List<Publicacion> noticias;
+    private List<Publicacion> eventos;
+    private List<Publicacion> discusiones;
     
     private Publicacion publicacionSeleccionada;
-    private CategoriaPublicacion categoriaPublicacionSeleccionada;
     private Comentario nuevoComentario;
+    private Usuario autorSeleccionado;
+    private CategoriaPublicacion noticia;
+    private CategoriaPublicacion evento;
+    private CategoriaPublicacion discusion;
     
     private String busqueda;
     
@@ -54,22 +61,41 @@ public class PublicacionBlogController implements Serializable {
     @PostConstruct
     public void init() {
         this.nuevoComentario = new Comentario();
+        this.publicacionesBuscadas = pf.findAllPorBusqueda(null);
+        this.publicacionesPorAutor = pf.findAllPorAutor(new Usuario());
+        this.noticia = cpf.find(Constantes.NOTICIA_ID);
+        this.evento = cpf.find(Constantes.EVENTO_ID);
+        this.discusion = cpf.find(Constantes.DISCUSION_ID);
     }
 
     public List<Publicacion> getPublicaciones() {
         this.publicaciones = pf.findAllActivas();
         return this.publicaciones;
     }
-    
-    public List<Publicacion> getPublicacionesPorTipo() {
-        if (this.categoriaPublicacionSeleccionada != null) {
-            this.publicacionesPorTipo = pf.findAllPorTipo(this.categoriaPublicacionSeleccionada);
-        } else {
-            this.publicacionesPorTipo = pf.findAllActivas();
-        }
-        
-        return this.publicacionesPorTipo;
+
+    public List<Publicacion> getPublicacionesBuscadas() {
+        return this.publicacionesBuscadas;
     }
+
+    public List<Publicacion> getPublicacionesPorAutor() {
+        this.publicacionesPorAutor = pf.findAllPorAutor(this.autorSeleccionado);
+        return this.publicacionesPorAutor;
+    }
+
+    public List<Publicacion> getNoticias() {
+        this.noticias = pf.findAllPorTipo(noticia);
+        return this.noticias;
+    }
+
+    public List<Publicacion> getEventos() {
+        this.eventos = pf.findAllPorTipo(evento);
+        return this.eventos;
+    }
+
+    public List<Publicacion> getDiscusiones() {
+        this.discusiones = pf.findAllPorTipo(discusion);
+        return this.discusiones;
+    }    
 
     public Publicacion getPublicacionSeleccionada() {
         return publicacionSeleccionada;
@@ -77,14 +103,6 @@ public class PublicacionBlogController implements Serializable {
 
     public void setPublicacionSeleccionada(Publicacion publicacionSeleccionada) {
         this.publicacionSeleccionada = publicacionSeleccionada;
-    }
-
-    public CategoriaPublicacion getCategoriaPublicacionSeleccionada() {
-        return categoriaPublicacionSeleccionada;
-    }
-
-    public void setCategoriaPublicacionSeleccionada(CategoriaPublicacion categoriaPublicacionSeleccionada) {
-        this.categoriaPublicacionSeleccionada = categoriaPublicacionSeleccionada;
     }
 
     public Comentario getNuevoComentario() {
@@ -108,8 +126,34 @@ public class PublicacionBlogController implements Serializable {
         return "publicacion.xhtml?faces-redirect=true";
     }
     
+    public String seleccionarCategoria(CategoriaPublicacion c) {
+        if (c.getEsNoticia()) {
+            return "noticias.xhtml?faces-redirect=true";
+        } else if (c.getEsEvento()) {
+            return "eventos.xhtml?faces-redirect=true";
+        } else if (c.getEsDiscusion()) {
+            return "discusiones.xhtml?faces-redirect=true";
+        }
+        
+        scriptController.setScript(MessageUtils.mostrarMensajeError("No se seleccionó categoría"));
+        return "";
+    }
+    
+    public String seleccionarAutor(Usuario u) {
+        this.autorSeleccionado = u;
+        // TODO : crear página
+        return "publicaciones-por-autor.xhtml?faces-redirect=true";
+    }
+    
     public String buscarPublicaciones() {
-        // facade que busque
+        if (this.busqueda == null || this.busqueda.trim().isEmpty()) {
+            this.scriptController.setScript(MessageUtils.mostrarMensajeError("Debe digitar un término de búsqueda"));
+            return "";
+        }
+        
+        // TODO: completar
+        //this.publicacionesBuscadas = pf.findAllPorBusqueda(this.busqueda);
+        //return "busqueda.xhtml?faces-redirect=true";
         return "";
     }
     

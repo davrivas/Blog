@@ -6,14 +6,15 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-    <ui:define name="title">Iniciar sesión</ui:define>
+    <ui:define name="title">Registrarse</ui:define>
     <ui:define name="content">
         <!-- Main Content -->
         <div class="container mt-3">
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
-                    <h1>Iniciar sesión</h1>
-
+                    <h1>Registrase</h1>
+                    
+                    <!-- TODO: cambiar esto -->
                     <h:form prependId="false">
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls">
@@ -31,9 +32,9 @@
                         </div>
                         <hr />
                         <div class="form-group">
-                            <h:commandLink type="submit" class="btn btn-primary" action="#{sesionController.iniciarSesion()}">
+                            <!-- <h:commandLink type="submit" class="btn btn-primary" action="#sesionController.iniciarSesion()}">
                                 <i class="fa fa-login"></i> Iniciar sesión
-                            </h:commandLink>
+                            </h:commandLink> -->
                         </div>
                     </h:form>
                 </div>

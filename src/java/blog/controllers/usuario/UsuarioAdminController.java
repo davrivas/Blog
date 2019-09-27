@@ -4,7 +4,6 @@ import blog.controllers.script.ScriptController;
 import blog.modelo.dao.UsuarioFacade;
 import blog.modelo.entidades.Usuario;
 import blog.utils.MessageUtils;
-import blog.utils.UsuarioUtils;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -23,8 +22,6 @@ public class UsuarioAdminController implements Serializable {
     @Inject
     private ScriptController scriptController;
 
-    private List<Usuario> usuarios;
-
     private Usuario nuevoUsuario;
     private Usuario usuarioSeleccionado;
 
@@ -39,8 +36,7 @@ public class UsuarioAdminController implements Serializable {
     }
 
     public List<Usuario> getUsuarios() {
-        this.usuarios = uf.findAll();
-        return this.usuarios;
+        return uf.findAll();
     }
 
     public Usuario getNuevoUsuario() {
@@ -129,15 +125,17 @@ public class UsuarioAdminController implements Serializable {
     }
 
     public String getRolColor(Usuario usuario) {
-        if (usuario == null || usuario.getRolId() == null) {
+        if (usuario == null)
             return "";
-        }
+        
+        if (usuario.getRolId() == null)
+            return "";
 
         String color = "color: ";
 
-        if (usuario.esAdministrador()) {
+        if (usuario.getEsAdministrador()) {
             color += "green;";
-        } else if (usuario.esVisitante()) {
+        } else if (usuario.getEsVisitante()) {
             color += "purple;";
         } else {
             color = "";

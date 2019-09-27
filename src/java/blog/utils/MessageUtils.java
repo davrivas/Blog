@@ -2,7 +2,7 @@ package blog.utils;
 
 public class MessageUtils {
 
-    enum TipoMensaje {
+    private enum TipoMensaje {
         Exito,
         Error
     }

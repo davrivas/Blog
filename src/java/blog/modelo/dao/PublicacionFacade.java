@@ -89,5 +89,24 @@ public class PublicacionFacade extends AbstractFacade<Publicacion> {
         
         return publicaciones;
     }
+    
+    public List<Publicacion> findAllPorBusqueda(String busqueda) {
+        List<Publicacion> publicaciones = null;
+        
+        try {
+            // habria que cambiar = por un contains o like
+            TypedQuery<Publicacion> tq = getEntityManager().createQuery("SELECT p "
+                    + "FROM Publicacion p "
+                    + "WHERE (p.titulo = :busqueda OR p.contenido = :busqueda) "
+                    + "AND p.estado = 1 "
+                    + "ORDER BY p.fechaPublicacion DESC", Publicacion.class);
+            tq.setParameter("busqueda", busqueda);
+            publicaciones = tq.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+        }
+        
+        return publicaciones;
+    }
 
 }

@@ -72,7 +72,7 @@
                                 <h:panelGroup rendered="#{c.estado == 1}">
                                     <div class="card mb-1">
                                         <div class="card-header">
-                                            <strong><h:outputText value="#{c.usuarioId.nombreCompleto} " /></strong> <em><h:outputText rendered="#{c.usuarioId.esAdministrador()}" value="Administrador" style="color: green" /></em><br />
+                                            <strong><h:outputText value="#{c.usuarioId.nombreCompleto} " /></strong> <em><h:outputText rendered="#{c.usuarioId.esAdministrador}" value="Administrador" style="color: green" /></em><br />
                                             <h:outputText value="#{c.fechaPublicacion}" style="font-size: 13px;"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText>
                                         </div>
                                         <div class="card-body">

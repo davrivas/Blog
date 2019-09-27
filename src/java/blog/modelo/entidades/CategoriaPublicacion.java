@@ -1,5 +1,6 @@
 package blog.modelo.entidades;
 
+import blog.utils.CategoriaPublicacionUtils;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -110,6 +111,18 @@ public class CategoriaPublicacion implements Serializable {
 
     public void setNombrePlural(String nombrePlural) {
         this.nombrePlural = nombrePlural;
+    }
+    
+    public boolean getEsNoticia() {
+        return CategoriaPublicacionUtils.esNoticia(this);
+    }
+    
+    public boolean getEsEvento() {
+        return CategoriaPublicacionUtils.esEvento(this);
+    }
+    
+    public boolean getEsDiscusion() {
+        return CategoriaPublicacionUtils.esDiscusion(this);
     }
 
 }

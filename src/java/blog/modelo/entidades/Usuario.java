@@ -168,11 +168,11 @@ public class Usuario implements Serializable {
         return UsuarioUtils.obtenerNombreCompleto(this);
     }
     
-    public boolean esAdministrador() {
+    public boolean getEsAdministrador() {
         return UsuarioUtils.esAdministrador(this);
     }
     
-    public boolean esVisitante() {
+    public boolean getEsVisitante() {
         return UsuarioUtils.esVisitante(this);
     }
 

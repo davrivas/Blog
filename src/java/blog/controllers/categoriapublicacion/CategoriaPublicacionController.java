@@ -2,14 +2,16 @@ package blog.controllers.categoriapublicacion;
 
 import blog.modelo.dao.CategoriaPublicacionFacade;
 import blog.modelo.entidades.CategoriaPublicacion;
+import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 
 @Named(value = "categoriaPublicacionController")
-@RequestScoped
-public class CategoriaPublicacionController {
+@ApplicationScoped
+public class CategoriaPublicacionController implements Serializable {
 
     @EJB
     private CategoriaPublicacionFacade cpf;
@@ -18,12 +20,13 @@ public class CategoriaPublicacionController {
 
     public CategoriaPublicacionController() {
     }
+    
+    @PostConstruct
+    public void init() {
+        this.categorias = cpf.findAll();
+    }
 
-    public List<CategoriaPublicacion> getCategorias() {
-        if (this.categorias == null || this.categorias.isEmpty()) {
-            this.categorias = cpf.findAll();
-        }
-        
+    public List<CategoriaPublicacion> getCategorias() {        
         return this.categorias;
     }
 

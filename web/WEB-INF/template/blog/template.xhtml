@@ -21,6 +21,9 @@
 
         <ui:include src="/WEB-INF/template/blog/footer.xhtml"></ui:include>
 
+        <ui:include rendered="#{not empty sesionController.usuario}" src="/WEB-INF/template/common/cerrar-sesion.xhtml"></ui:include>
+        <ui:insert name="modals"></ui:insert>
+        
         <ui:include src="/WEB-INF/template/common/scripts.xhtml"></ui:include>
         <script src="#{request.contextPath}/resources/js/clean-blog.min.js"></script>
         <script src="#{request.contextPath}/resources/js/blog-navbar.js"></script>
