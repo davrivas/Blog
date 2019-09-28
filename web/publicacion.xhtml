@@ -5,6 +5,9 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="historyBack">
+        <h:outputScript rendered="#{empty publicacionBlogController.publicacionSeleccionada}">#{scriptController.historyBack}</h:outputScript>
+    </ui:define>
     <ui:define name="title">#{publicacionBlogController.publicacionSeleccionada.titulo}</ui:define>
     <ui:define name="content">
         <!-- Post Content -->
@@ -20,9 +23,9 @@
 
                         <h:form prependId="false">
                             <p>
-                                <em>Publicado por: </em> <h:outputText value="#{publicacionBlogController.publicacionSeleccionada.usuarioId.nombreCompleto}" /><br/>
+                                <em>Publicado por: </em> <h:commandLink title="Ver publicaciones de #{publicacionBlogController.publicacionSeleccionada.usuarioId.nombreCompleto}" action="#{publicacionBlogController.seleccionarAutor(publicacionBlogController.publicacionSeleccionada.usuarioId)}"><h:outputText value="#{publicacionBlogController.publicacionSeleccionada.usuarioId.nombreCompleto}" /></h:commandLink><br/>
                                 <em>Fecha de publicación: </em> <h:outputText value="#{publicacionBlogController.publicacionSeleccionada.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText><br />
-                                <em>Categoría: </em> <h:commandLink title="Ver #{publicacionBlogController.publicacionSeleccionada.categoriaPublicacionId.nombrePlural}"><h:outputText value="#{publicacionBlogController.publicacionSeleccionada.categoriaPublicacionId.nombre}" /></h:commandLink>
+                                <em>Categoría: </em> <h:commandLink action="#{publicacionBlogController.seleccionarCategoria(publicacionBlogController.publicacionSeleccionada.categoriaPublicacionId)}" title="Ver #{publicacionBlogController.publicacionSeleccionada.categoriaPublicacionId.nombrePlural}"><h:outputText value="#{publicacionBlogController.publicacionSeleccionada.categoriaPublicacionId.nombre}" /></h:commandLink>
                             </p>
                         </h:form>
 
@@ -70,7 +73,7 @@
                             <h2 class="mt-5">Comentarios</h2>
                             <ui:repeat value="#{publicacionBlogController.publicacionSeleccionada.comentarioList}" var="c">
                                 <h:panelGroup rendered="#{c.estado == 1}">
-                                    <div class="card mb-1">
+                                    <div class="card mb-2">
                                         <div class="card-header">
                                             <strong><h:outputText value="#{c.usuarioId.nombreCompleto} " /></strong> <em><h:outputText rendered="#{c.usuarioId.esAdministrador}" value="Administrador" style="color: green" /></em><br />
                                             <h:outputText value="#{c.fechaPublicacion}" style="font-size: 13px;"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText>

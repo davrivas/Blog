@@ -5,33 +5,23 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:define name="title">Inicio</ui:define>
+    <ui:define name="historyBack">
+        <h:outputScript rendered="#{empty publicacionBlogController.busqueda}">#{scriptController.historyBack}</h:outputScript>
+    </ui:define>
+    <ui:define name="title">Busqueda de '#{publicacionBlogController.busqueda}'</ui:define>
     <ui:define name="content">
-        <!-- Page Header -->
-        <header id="mastHead" class="masthead" style="background-image: url('resources/img/church-bg.jpg')">
-            <div class="overlay"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-md-10 mx-auto">
-                        <div class="site-heading">
-                            <h1>Blog iglesia</h1>
-                            <span class="subheading">Todas las noticias de la iglesia...</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-
         <!-- Main Content -->
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
-                    <h:panelGroup rendered="#{empty publicacionBlogController.publicaciones}">
+                    <h1 class="mt-3">Busqueda de <em><h:outputText value="'#{publicacionBlogController.busqueda}'" /></em></h1>
+                    
+                    <h:panelGroup rendered="#{empty publicacionBlogController.publicacionesBuscadas}">
                         <p class="text-center"><em>No hay publicaciones</em></p>
                     </h:panelGroup>
                     
-                    <h:form rendered="#{not empty publicacionBlogController.publicaciones}" prependId="false">
-                        <ui:repeat value="#{publicacionBlogController.publicaciones}" var="p">
+                    <h:form rendered="#{not empty publicacionBlogController.publicacionesBuscadas}" prependId="false">
+                        <ui:repeat value="#{publicacionBlogController.publicacionesBuscadas}" var="p">
                             <div class="post-preview">
                                 <h:commandLink action="#{publicacionBlogController.seleccionarPublicacion(p)}">
                                     <h2 class="post-title">

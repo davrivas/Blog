@@ -1,9 +1,8 @@
 package blog.controllers.publicacion;
 
-import blog.constantes.Constantes;
+import blog.controllers.categoriapublicacion.CategoriaPublicacionController;
 import blog.controllers.script.ScriptController;
 import blog.controllers.sesion.SesionController;
-import blog.modelo.dao.CategoriaPublicacionFacade;
 import blog.modelo.dao.ComentarioFacade;
 import blog.modelo.dao.PublicacionFacade;
 import blog.modelo.entidades.CategoriaPublicacion;
@@ -28,13 +27,13 @@ public class PublicacionBlogController implements Serializable {
     private PublicacionFacade pf;
     
     @EJB
-    private CategoriaPublicacionFacade cpf;
-    
-    @EJB
     private ComentarioFacade cf;
     
     @Inject
     private SesionController sc;
+    
+    @Inject
+    private CategoriaPublicacionController cpc;
     
     @Inject
     private ScriptController scriptController;
@@ -49,9 +48,6 @@ public class PublicacionBlogController implements Serializable {
     private Publicacion publicacionSeleccionada;
     private Comentario nuevoComentario;
     private Usuario autorSeleccionado;
-    private CategoriaPublicacion noticia;
-    private CategoriaPublicacion evento;
-    private CategoriaPublicacion discusion;
     
     private String busqueda;
     
@@ -61,11 +57,6 @@ public class PublicacionBlogController implements Serializable {
     @PostConstruct
     public void init() {
         this.nuevoComentario = new Comentario();
-        this.publicacionesBuscadas = pf.findAllPorBusqueda(null);
-        this.publicacionesPorAutor = pf.findAllPorAutor(new Usuario());
-        this.noticia = cpf.find(Constantes.NOTICIA_ID);
-        this.evento = cpf.find(Constantes.EVENTO_ID);
-        this.discusion = cpf.find(Constantes.DISCUSION_ID);
     }
 
     public List<Publicacion> getPublicaciones() {
@@ -83,17 +74,17 @@ public class PublicacionBlogController implements Serializable {
     }
 
     public List<Publicacion> getNoticias() {
-        this.noticias = pf.findAllPorTipo(noticia);
+        this.noticias = pf.findAllPorTipo(cpc.getNoticia());
         return this.noticias;
     }
 
     public List<Publicacion> getEventos() {
-        this.eventos = pf.findAllPorTipo(evento);
+        this.eventos = pf.findAllPorTipo(cpc.getEvento());
         return this.eventos;
     }
 
     public List<Publicacion> getDiscusiones() {
-        this.discusiones = pf.findAllPorTipo(discusion);
+        this.discusiones = pf.findAllPorTipo(cpc.getDiscusion());
         return this.discusiones;
     }    
 
@@ -103,6 +94,10 @@ public class PublicacionBlogController implements Serializable {
 
     public void setPublicacionSeleccionada(Publicacion publicacionSeleccionada) {
         this.publicacionSeleccionada = publicacionSeleccionada;
+    }
+
+    public Usuario getAutorSeleccionado() {
+        return autorSeleccionado;
     }
 
     public Comentario getNuevoComentario() {
@@ -147,14 +142,15 @@ public class PublicacionBlogController implements Serializable {
     
     public String buscarPublicaciones() {
         if (this.busqueda == null || this.busqueda.trim().isEmpty()) {
+            this.busqueda = null;
             this.scriptController.setScript(MessageUtils.mostrarMensajeError("Debe digitar un término de búsqueda"));
             return "";
         }
         
-        // TODO: completar
-        //this.publicacionesBuscadas = pf.findAllPorBusqueda(this.busqueda);
-        //return "busqueda.xhtml?faces-redirect=true";
-        return "";
+        String[] palabras = this.busqueda.split(" ");
+        this.publicacionesBuscadas = pf.findAllPorBusqueda(palabras);
+        // TODO : crear página
+        return "busqueda.xhtml?faces-redirect=true";
     }
     
     public String agregarComentario() {

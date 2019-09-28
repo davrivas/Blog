@@ -28,13 +28,17 @@ public class SesionController implements Serializable {
     private Usuario usuario;
     private String correo;
     private String clave;
+    
+    private Usuario nuevoUsuario;
+    private String confirmacionClave;
 
     public SesionController() {
     }
 
     @PostConstruct
     public void init() {
-        //this.usuario = this.uf.find(2);
+        //this.usuario = this.uf.find(1); // Admin
+        //this.usuario = this.uf.find(2); // Usuario
     }
 
     public Usuario getUsuario() {
@@ -61,11 +65,25 @@ public class SesionController implements Serializable {
         this.clave = clave;
     }
 
+    public Usuario getNuevoUsuario() {
+        return nuevoUsuario;
+    }
+
+    public void setNuevoUsuario(Usuario nuevoUsuario) {
+        this.nuevoUsuario = nuevoUsuario;
+    }
+
+    public String getConfirmacionClave() {
+        return confirmacionClave;
+    }
+
+    public void setConfirmacionClave(String confirmacionClave) {
+        this.confirmacionClave = confirmacionClave;
+    }
+
     public String iniciarSesion() {
         try {
             this.usuario = uf.iniciarSesion(this.correo, this.clave);
-            
-            this.correo = null;
             this.clave = null;
 
             if (this.usuario == null) {
@@ -73,6 +91,8 @@ public class SesionController implements Serializable {
                 return "";
             }
 
+            this.correo = null;
+            
             switch (this.usuario.getRolId().getId()) {
                 case Constantes.ADMINISTRADOR_ID:
                     sc.setScript(MessageUtils.mostrarMensajeExito("Bienvenido administrador " + this.usuario.getNombreCompleto()));
@@ -91,13 +111,13 @@ public class SesionController implements Serializable {
     }
 
     public void cerrarSesion() throws IOException {
+        this.usuario = null;
+        
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
-        this.usuario = null;
-        this.correo = null;
-        this.clave = null;
-        ec.invalidateSession();
         String path = ec.getRequestContextPath() + "/index.xhtml";
+        
+        ec.invalidateSession();        
         ec.redirect(path);
     }
 

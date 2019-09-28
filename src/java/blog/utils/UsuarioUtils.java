@@ -25,4 +25,11 @@ public class UsuarioUtils {
     public static String obtenerNombreCompleto(Usuario usuario) {
         return usuario.getNombres() + " " + usuario.getApellidos();
     }
+    
+    public static boolean idEsIgual(Usuario u1, Usuario u2) {
+        if (u1 == null || u2 == null)
+            return false;
+        
+        return u1.getId().equals(u2.getId());
+    }
 }

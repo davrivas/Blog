@@ -175,5 +175,9 @@ public class Usuario implements Serializable {
     public boolean getEsVisitante() {
         return UsuarioUtils.esVisitante(this);
     }
+    
+    public boolean idEsIgual(Usuario otroUsuario) {
+        return UsuarioUtils.idEsIgual(this, otroUsuario);
+    }
 
 }

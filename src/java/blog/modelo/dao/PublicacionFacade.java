@@ -23,11 +23,11 @@ public class PublicacionFacade extends AbstractFacade<Publicacion> {
     public PublicacionFacade() {
         super(Publicacion.class);
     }
-    
+
     @Override
     public List<Publicacion> findAll() {
         List<Publicacion> publicaciones = null;
-        
+
         try {
             TypedQuery<Publicacion> tq = getEntityManager().createQuery("SELECT p "
                     + "FROM Publicacion p "
@@ -36,13 +36,13 @@ public class PublicacionFacade extends AbstractFacade<Publicacion> {
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
         }
-        
+
         return publicaciones;
     }
-    
+
     public List<Publicacion> findAllActivas() {
         List<Publicacion> publicaciones = null;
-        
+
         try {
             TypedQuery<Publicacion> tq = getEntityManager().createQuery("SELECT p "
                     + "FROM Publicacion p "
@@ -52,13 +52,13 @@ public class PublicacionFacade extends AbstractFacade<Publicacion> {
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
         }
-        
+
         return publicaciones;
     }
-    
+
     public List<Publicacion> findAllPorTipo(CategoriaPublicacion categoria) {
         List<Publicacion> publicaciones = null;
-        
+
         try {
             TypedQuery<Publicacion> tq = getEntityManager().createQuery("SELECT p "
                     + "FROM Publicacion p "
@@ -69,13 +69,13 @@ public class PublicacionFacade extends AbstractFacade<Publicacion> {
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
         }
-        
+
         return publicaciones;
     }
-    
+
     public List<Publicacion> findAllPorAutor(Usuario autor) {
         List<Publicacion> publicaciones = null;
-        
+
         try {
             TypedQuery<Publicacion> tq = getEntityManager().createQuery("SELECT p "
                     + "FROM Publicacion p "
@@ -86,21 +86,56 @@ public class PublicacionFacade extends AbstractFacade<Publicacion> {
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
         }
-        
+
         return publicaciones;
     }
-    
-    public List<Publicacion> findAllPorBusqueda(String busqueda) {
+
+    public List<Publicacion> findAllPorBusqueda(String[] busqueda) {
+        if (busqueda == null || busqueda.length == 0) {
+            return null;
+        }
+
         List<Publicacion> publicaciones = null;
-        
+        String condiciones = "";
+
+        for (int i = 0; i < busqueda.length; i++) {
+            if (busqueda[i] == null || busqueda[i].trim().isEmpty()) {
+                continue;
+            }
+
+            if (i > 0) {
+                condiciones += "OR ";
+            }
+
+            condiciones += "p.titulo LIKE '%" + busqueda[i] + "%' ";
+            condiciones += "OR p.contenido LIKE '%" + busqueda[i] + "%' ";
+            condiciones += "OR p.categoriaPublicacionId.nombre LIKE '%" + busqueda[i] + "%' ";
+            condiciones += "OR p.categoriaPublicacionId.nombrePlural LIKE '%" + busqueda[i] + "%' ";
+            condiciones += "OR p.usuarioId.nombres LIKE '%" + busqueda[i] + "%' ";
+            condiciones += "OR p.usuarioId.apellidos LIKE '%" + busqueda[i] + "%'";
+
+            if (i < busqueda.length - 1) {
+                condiciones += " ";
+            }
+        }
+
+//        new Publicacion().getTitulo()
+//        new Publicacion().getContenido()
+//        new Publicacion().getCategoriaPublicacionId().getNombre()
+//        new Publicacion().getCategoriaPublicacionId().getNombrePlural()
+//        new Publicacion().getUsuarioId().getNombres()
+//        new Publicacion().getUsuarioId().getApellidos()
+
+        String consulta = "SELECT p "
+                + "FROM Publicacion p "
+                + "WHERE (" + condiciones + ") "
+                + "AND p.estado = 1 "
+                + "ORDER BY p.fechaPublicacion DESC";
+
+        //System.out.println(selectQuery);
+
         try {
-            // habria que cambiar = por un contains o like
-            TypedQuery<Publicacion> tq = getEntityManager().createQuery("SELECT p "
-                    + "FROM Publicacion p "
-                    + "WHERE (p.titulo = :busqueda OR p.contenido = :busqueda) "
-                    + "AND p.estado = 1 "
-                    + "ORDER BY p.fechaPublicacion DESC", Publicacion.class);
-            tq.setParameter("busqueda", busqueda);
+            TypedQuery<Publicacion> tq = getEntityManager().createQuery(consulta, Publicacion.class);
             publicaciones = tq.getResultList();
         } catch (Exception ex) {
             ex.printStackTrace(System.err);

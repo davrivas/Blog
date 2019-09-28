@@ -12,7 +12,8 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body"><p><strong>Nombre completo: </strong> <h:outputText value="#{usuarioAdminController.usuarioSeleccionado.nombreCompleto}" /></p>
+                <div class="modal-body">
+                    <p><strong>Nombre completo: </strong> <h:outputText value="#{usuarioAdminController.usuarioSeleccionado.nombreCompleto}" /></p>
                     <p><strong>Correo electrónico: </strong> <h:outputText value="#{usuarioAdminController.usuarioSeleccionado.correo}" /></p>
                     <p><strong>Rol: </strong> <h:outputText value="#{usuarioAdminController.usuarioSeleccionado.rolId.nombre}" style="#{usuarioAdminController.getRolColor(usuarioAdminController.usuarioSeleccionado)}" /></p>
                 </div>

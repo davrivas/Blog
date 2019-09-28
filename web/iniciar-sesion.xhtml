@@ -6,6 +6,9 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:define name="historyBack">
+        <h:outputScript rendered="#{not empty sesionController.usuario}">#{scriptController.historyBack}</h:outputScript>
+    </ui:define>
     <ui:define name="title">Iniciar sesión</ui:define>
     <ui:define name="content">
         <!-- Main Content -->
@@ -39,8 +42,5 @@
                 </div>
             </div>
         </div>
-    </ui:define>
-    <ui:define name="scripts">
-        <h:outputScript rendered="#{not empty sesionController.usuario}" value="history.back()" />
     </ui:define>
 </ui:composition>

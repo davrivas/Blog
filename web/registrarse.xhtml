@@ -6,6 +6,9 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:define name="historyBack">
+        <h:outputScript rendered="#{not empty sesionController.usuario}">#{scriptController.historyBack}</h:outputScript>
+    </ui:define>
     <ui:define name="title">Registrarse</ui:define>
     <ui:define name="content">
         <!-- Main Content -->
@@ -16,6 +19,47 @@
                     
                     <!-- TODO: cambiar esto -->
                     <h:form prependId="false">
+                        <!-- 
+                        <div class="form-row">
+                <div class="form-group col-md-6">
+                    <h:outputLabel for="nombres">Nombres</h:outputLabel>
+                    <h:inputText id="nombres" required="true" maxlength="25" class="form-control" value="#{usuarioAdminController.nuevoUsuario.nombres}" requiredMessage="Debe ingresar los nombres del usuario" />
+                    <h:message for="nombres" style="color: red;" />
+                </div>
+                <div class="form-group col-md-6">
+                    <h:outputLabel for="apellidos">Apellidos</h:outputLabel>
+                    <h:inputText id="apellidos" required="true" maxlength="50" class="form-control" value="#{usuarioAdminController.nuevoUsuario.apellidos}" requiredMessage="Debe ingresar los apellidos del usuario" />
+                    <h:message for="apellidos" style="color: red;" />
+                </div>
+            </div>
+            <div class="form-row">    
+                <div class="form-group col-md-6">
+                    <h:outputLabel for="rol">Rol</h:outputLabel>
+                    <h:selectOneMenu id="rol" required="true" value="#{usuarioAdminController.nuevoUsuario.rolId}" class="form-control" requiredMessage="Debe seleccionar un rol para el usuario">
+                        <f:selectItem itemLabel="Seleccione un rol" />
+                        <f:selectItems value="#{rolController.roles}" var="r" itemLabel="#{r.nombre}" />
+                    </h:selectOneMenu>
+                    <h:message for="rol" style="color: red;" />
+                </div>
+                <div class="form-group col-md-6">
+                    <h:outputLabel for="email">Correo electrónico</h:outputLabel>
+                    <h:inputText id="email" required="true" maxlength="50" class="form-control" value="#{usuarioAdminController.nuevoUsuario.correo}" requiredMessage="Debe ingresar el correo electrónico del usuario" />
+                    <h:message for="email" style="color: red;" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <h:outputLabel for="clave">Clave</h:outputLabel>
+                    <h:inputSecret id="clave" required="true" maxlength="16" class="form-control" value="#{usuarioAdminController.nuevoUsuario.clave}" requiredMessage="Debe ingresar la clave del usuario" />
+                    <h:message for="clave" style="color: red;" />
+                </div>
+                <div class="form-group col-md-6">
+                    <h:outputLabel for="confirmacionClave">Confirmación de clave</h:outputLabel>
+                    <h:inputSecret id="confirmacionClave" required="true" maxlength="16" class="form-control" value="#{usuarioAdminController.confirmacionClave}" requiredMessage="Debe confirmar la clave del usuario" />
+                    <h:message for="confirmacionClave" style="color: red;" />
+                </div>
+            </div>
+                        -->
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls">
                                 <h:outputLabel for="email" value="Correo" />
@@ -40,8 +84,5 @@
                 </div>
             </div>
         </div>
-    </ui:define>
-    <ui:define name="scripts">
-        <h:outputScript rendered="#{not empty sesionController.usuario}" value="history.back()" />
     </ui:define>
 </ui:composition>
