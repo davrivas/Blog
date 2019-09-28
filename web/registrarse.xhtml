@@ -16,69 +16,60 @@
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <h1>Registrase</h1>
-                    
-                    <!-- TODO: cambiar esto -->
+
                     <h:form prependId="false">
-                        <!-- 
                         <div class="form-row">
-                <div class="form-group col-md-6">
-                    <h:outputLabel for="nombres">Nombres</h:outputLabel>
-                    <h:inputText id="nombres" required="true" maxlength="25" class="form-control" value="#{usuarioAdminController.nuevoUsuario.nombres}" requiredMessage="Debe ingresar los nombres del usuario" />
-                    <h:message for="nombres" style="color: red;" />
-                </div>
-                <div class="form-group col-md-6">
-                    <h:outputLabel for="apellidos">Apellidos</h:outputLabel>
-                    <h:inputText id="apellidos" required="true" maxlength="50" class="form-control" value="#{usuarioAdminController.nuevoUsuario.apellidos}" requiredMessage="Debe ingresar los apellidos del usuario" />
-                    <h:message for="apellidos" style="color: red;" />
-                </div>
-            </div>
-            <div class="form-row">    
-                <div class="form-group col-md-6">
-                    <h:outputLabel for="rol">Rol</h:outputLabel>
-                    <h:selectOneMenu id="rol" required="true" value="#{usuarioAdminController.nuevoUsuario.rolId}" class="form-control" requiredMessage="Debe seleccionar un rol para el usuario">
-                        <f:selectItem itemLabel="Seleccione un rol" />
-                        <f:selectItems value="#{rolController.roles}" var="r" itemLabel="#{r.nombre}" />
-                    </h:selectOneMenu>
-                    <h:message for="rol" style="color: red;" />
-                </div>
-                <div class="form-group col-md-6">
-                    <h:outputLabel for="email">Correo electrónico</h:outputLabel>
-                    <h:inputText id="email" required="true" maxlength="50" class="form-control" value="#{usuarioAdminController.nuevoUsuario.correo}" requiredMessage="Debe ingresar el correo electrónico del usuario" />
-                    <h:message for="email" style="color: red;" />
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <h:outputLabel for="clave">Clave</h:outputLabel>
-                    <h:inputSecret id="clave" required="true" maxlength="16" class="form-control" value="#{usuarioAdminController.nuevoUsuario.clave}" requiredMessage="Debe ingresar la clave del usuario" />
-                    <h:message for="clave" style="color: red;" />
-                </div>
-                <div class="form-group col-md-6">
-                    <h:outputLabel for="confirmacionClave">Confirmación de clave</h:outputLabel>
-                    <h:inputSecret id="confirmacionClave" required="true" maxlength="16" class="form-control" value="#{usuarioAdminController.confirmacionClave}" requiredMessage="Debe confirmar la clave del usuario" />
-                    <h:message for="confirmacionClave" style="color: red;" />
-                </div>
-            </div>
-                        -->
-                        <div class="control-group">
-                            <div class="form-group floating-label-form-group controls">
-                                <h:outputLabel for="email" value="Correo" />
-                                <h:inputText value="#{sesionController.correo}" class="form-control" a:placeholder="Correo" id="email" required="true" requiredMessage="Escriba su correo" />
-                                <h:message for="email" style="color: red;" />
+                            <div class="control-group col-md-6">
+                                <div class="form-group floating-label-form-group controls">
+                                    <h:outputLabel for="nombres" value="Nombres" />
+                                    <h:inputText id="nombres" required="true" a:placeholder="Nombres" maxlength="25" class="form-control" value="#{sesionController.nuevoUsuario.nombres}" requiredMessage="Debe ingresar los nombres" />
+                                    <h:message for="nombres" style="color: red;" />
+                                </div>
+                            </div>
+                            <div class="control-group col-md-6">
+                                <div class="form-group floating-label-form-group controls">
+                                    <h:outputLabel for="apellidos" value="Apellidos" />
+                                    <h:inputText id="apellidos" required="true" a:placeholder="Apellidos" maxlength="50" class="form-control" value="#{sesionController.nuevoUsuario.apellidos}" requiredMessage="Debe ingresar los apellidos" />
+                                    <h:message for="apellidos" style="color: red;" />
+                                </div>
                             </div>
                         </div>
-                        <div class="control-group">
-                            <div class="form-group floating-label-form-group controls">
-                                <h:outputLabel for="clave" value="Clave" />
-                                <h:inputSecret value="#{sesionController.clave}" class="form-control" a:placeholder="Clave" id="clave" required="true" requiredMessage="Escriba su clave" />
-                                <h:message for="clave" style="color: red;" />
+                        <div class="form-row">
+                            <div class="control-group col-md-6">
+                                <div class="form-group floating-label-form-group controls">
+                                    <h:outputLabel for="email" value="Correo electrónico" />
+                                    <h:inputText id="email" required="true" a:placeholder="Correo electrónico" maxlength="50" class="form-control" value="#{sesionController.nuevoUsuario.correo}" requiredMessage="Debe ingresar el correo electrónico" />
+                                    <h:message for="email" style="color: red;" />
+                                </div>
+                            </div>
+                            <div class="control-group col-md-6">
+                                <div class="form-group floating-label-form-group controls">
+                                    <h:outputLabel for="confimacionEmail" value="Confirmar correo electrónico" />
+                                    <h:inputText id="confimacionEmail" required="true" a:placeholder="Confirmar correo electrónico" maxlength="50" class="form-control" value="#{sesionController.confirmacionCorreo}" requiredMessage="Debe ingresar la confirmación del correo electrónico" />
+                                    <h:message for="confimacionEmail" style="color: red;" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="control-group col-md-6">
+                                <div class="form-group floating-label-form-group controls">
+                                    <h:outputLabel for="clave" value="Clave" />
+                                    <h:inputSecret id="clave" required="true" a:placeholder="Clave" maxlength="16" class="form-control" value="#{sesionController.nuevoUsuario.clave}" requiredMessage="Debe ingresar la clave" />
+                                    <h:message for="clave" style="color: red;" />
+                                </div>
+                            </div>
+                            <div class="control-group col-md-6">
+                                <div class="form-group floating-label-form-group controls">
+                                    <h:outputLabel for="confirmacionClave" value="Confirmación de clave" />
+                                    <h:inputSecret id="confirmacionClave" required="true" a:placeholder="Confirmación de clave" maxlength="16" class="form-control" value="#{sesionController.confirmacionClave}" requiredMessage="Debe confirmar la clave" />
+                                    <h:message for="confirmacionClave" style="color: red;" />
+                                </div>
                             </div>
                         </div>
                         <hr />
                         <div class="form-group">
-                            <!-- <h:commandLink type="submit" class="btn btn-primary" action="#sesionController.iniciarSesion()}">
-                                <i class="fa fa-login"></i> Iniciar sesión
-                            </h:commandLink> -->
+                            <h:commandButton value="Registarse" type="submit" class="btn btn-primary" action="#{sesionController.registrarse()}" />
+                            <input type="reset" value="Borrar campos" class="btn btn-secondary" />
                         </div>
                     </h:form>
                 </div>

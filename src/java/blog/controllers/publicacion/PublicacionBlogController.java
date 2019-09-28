@@ -136,7 +136,6 @@ public class PublicacionBlogController implements Serializable {
     
     public String seleccionarAutor(Usuario u) {
         this.autorSeleccionado = u;
-        // TODO : crear página
         return "publicaciones-por-autor.xhtml?faces-redirect=true";
     }
     
@@ -149,7 +148,6 @@ public class PublicacionBlogController implements Serializable {
         
         String[] palabras = this.busqueda.split(" ");
         this.publicacionesBuscadas = pf.findAllPorBusqueda(palabras);
-        // TODO : crear página
         return "busqueda.xhtml?faces-redirect=true";
     }
     

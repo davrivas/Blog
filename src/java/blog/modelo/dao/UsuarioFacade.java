@@ -54,4 +54,21 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         
         return usuario;
     }
+    
+    public Usuario findByCorreo(String correo) {
+        Usuario usuario = null;
+        
+        try {
+            TypedQuery<Usuario> tq = getEntityManager().createQuery("SELECT u "
+                    + "FROM Usuario u "
+                    + "WHERE u.correo = :correo", Usuario.class);
+            tq.setParameter("correo", correo);
+            usuario = tq.getSingleResult();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+        }
+        
+        return usuario;
+    }
+    
 }
