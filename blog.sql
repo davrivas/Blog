@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 26, 2019 at 05:25 AM
+-- Generation Time: Sep 28, 2019 at 09:49 PM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -64,7 +64,10 @@ CREATE TABLE `comentario` (
 
 INSERT INTO `comentario` (`id`, `usuario_id`, `publicacion_id`, `comentario`, `fecha_publicacion`, `estado`) VALUES
 (1, 1, 3, 'Que buen articulo!', '2019-09-25 20:39:40', 1),
-(2, 2, 3, 'Me gustó este artículo, recomendadísimo.', '2019-09-25 20:53:10', 1);
+(2, 2, 3, 'Me gustó este artículo, recomendadísimo.', '2019-09-25 20:53:10', 1),
+(3, 6, 3, 'Me gusta esta página, quiero más artículos.', '2019-09-28 10:02:59', 1),
+(4, 5, 3, 'I don\'t know spanish, but this is cool!', '2019-09-28 10:11:10', 1),
+(5, 2, 4, 'Estaré en primera fila.', '2019-09-28 10:20:50', 1);
 
 -- --------------------------------------------------------
 
@@ -88,7 +91,7 @@ CREATE TABLE `publicacion` (
 
 INSERT INTO `publicacion` (`id`, `usuario_id`, `categoria_publicacion_id`, `titulo`, `contenido`, `fecha_publicacion`, `estado`) VALUES
 (3, 1, 1, 'Publicacion editada', '<p>Este un ejemplo de publicación.</p><p><img src=\"https://i.imgur.com/Pt6qsYF.jpg\" alt=\"roco\"><br></p><p>Este es otro <strong>párrafo,</strong> miremos si se <em>edita</em>.</p>', '2019-09-21 18:21:23', 1),
-(4, 1, 2, 'Concierto cristiano', 'Este 1 de octubre habrá un concierto de beneficiencia por los niños.\r\n\r\nEntradas en primera fila 465 67 45.', '2019-09-21 20:13:46', 0);
+(4, 1, 2, 'Concierto cristiano', '<p>Este 1 de octubre habrá un concierto de beneficiencia por los niños.</p><p>Entradas en primera fila <a href=\"tel:+5714656745\" title=\"Llamar\">465 67 45</a>.</p>', '2019-09-21 20:13:46', 1);
 
 -- --------------------------------------------------------
 
@@ -130,7 +133,10 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`id`, `rol_id`, `nombres`, `apellidos`, `correo`, `clave`) VALUES
 (1, 1, 'Andres', 'Bustos', 'andresbustos@gmail.com', 'andres'),
-(2, 2, 'David', 'Rivas', 'd.rivas95@hotmail.com', 'david');
+(2, 2, 'David', 'Rivas', 'd.rivas95@hotmail.com', 'david'),
+(3, 1, 'John', 'Doe', 'johndoe@mail.com', 'john'),
+(5, 2, 'Jane', 'Doe', 'janedoe@mail.com', 'jane'),
+(6, 2, 'Juan', 'Perez', 'juanperez@gmail.com', 'juan');
 
 --
 -- Indexes for dumped tables
@@ -186,13 +192,13 @@ ALTER TABLE `categoria_publicacion`
 -- AUTO_INCREMENT for table `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `publicacion`
 --
 ALTER TABLE `publicacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `rol`
@@ -204,7 +210,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
