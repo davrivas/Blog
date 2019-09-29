@@ -160,7 +160,6 @@ public class PublicacionBlogController implements Serializable {
             
             this.cf.create(this.nuevoComentario);
             
-            this.publicacionSeleccionada.getComentarioList().add(this.nuevoComentario);
             this.nuevoComentario = new Comentario();
             this.scriptController.setScript(MessageUtils.mostrarMensajeExito("Comentario agregado satisfactoriamente"));
         } catch (Exception ex) {
