@@ -25,8 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Comentario.findAll", query = "SELECT c FROM Comentario c")
     , @NamedQuery(name = "Comentario.findById", query = "SELECT c FROM Comentario c WHERE c.id = :id")
     , @NamedQuery(name = "Comentario.findByComentario", query = "SELECT c FROM Comentario c WHERE c.comentario = :comentario")
-    , @NamedQuery(name = "Comentario.findByFechaPublicacion", query = "SELECT c FROM Comentario c WHERE c.fechaPublicacion = :fechaPublicacion")
-    , @NamedQuery(name = "Comentario.findByEstado", query = "SELECT c FROM Comentario c WHERE c.estado = :estado")})
+    , @NamedQuery(name = "Comentario.findByFechaPublicacion", query = "SELECT c FROM Comentario c WHERE c.fechaPublicacion = :fechaPublicacion")})
 public class Comentario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,9 +41,6 @@ public class Comentario implements Serializable {
     @Column(name = "fecha_publicacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaPublicacion;
-    @Basic(optional = false)
-    @Column(name = "estado")
-    private short estado;
     @JoinColumn(name = "publicacion_id", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Publicacion publicacionId;
@@ -59,11 +55,10 @@ public class Comentario implements Serializable {
         this.id = id;
     }
 
-    public Comentario(Integer id, String comentario, Date fechaPublicacion, short estado) {
+    public Comentario(Integer id, String comentario, Date fechaPublicacion) {
         this.id = id;
         this.comentario = comentario;
         this.fechaPublicacion = fechaPublicacion;
-        this.estado = estado;
     }
 
     public Integer getId() {
@@ -88,14 +83,6 @@ public class Comentario implements Serializable {
 
     public void setFechaPublicacion(Date fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
-    }
-
-    public short getEstado() {
-        return estado;
-    }
-
-    public void setEstado(short estado) {
-        this.estado = estado;
     }
 
     public Publicacion getPublicacionId() {

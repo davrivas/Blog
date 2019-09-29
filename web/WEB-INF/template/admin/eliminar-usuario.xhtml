@@ -19,7 +19,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <h:form prependId="false">
+                    <h:form rendered="#{not empty usuarioAdminController.usuarioSeleccionado}" prependId="false">
                         <h:commandButton class="btn btn-danger" action="#{usuarioAdminController.eliminarUsuario()}" value="Eliminar usuario" />
                     </h:form>
                 </div>

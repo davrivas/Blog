@@ -4,7 +4,8 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <ui:define name="historyBack">
         <h:outputScript rendered="#{empty publicacionBlogController.publicacionSeleccionada}">#{scriptController.historyBack}</h:outputScript>
     </ui:define>
@@ -45,14 +46,14 @@
                                 </div>
                             </div>
                         </h:panelGroup>
-                        
+
                         <h:form prependId="false" rendered="#{not empty sesionController.usuario}">
                             <div class="card mt-5">
                                 <div class="card-header">
                                     <h3><h:outputLabel for="comentario" value="Añadir comentario" /></h3>
                                 </div>
                                 <div class="card-body">
-                                    <h:inputTextarea id="comentario" class="form-control" value="#{publicacionBlogController.nuevoComentario.comentario}" requiredMessage="Debe agregar algo para comentar" />
+                                    <h:inputTextarea id="comentario" required="true" a:maxlength="1000" class="form-control" value="#{publicacionBlogController.nuevoComentario.comentario}" requiredMessage="Debe agregar algo para comentar" />
                                     <h:message for="comentario" style="color: red;" />
                                 </div>
                                 <div class="card-footer">
@@ -61,29 +62,40 @@
                             </div>
                         </h:form>
 
-                        <h:panelGroup rendered="#{empty publicacionBlogController.publicacionSeleccionada.comentarioList}">
+                        <h:panelGroup rendered="#{empty publicacionBlogController.comentariosPublicacion}">
                             <p class="text-center"><em>No hay comentarios</em></p>
                         </h:panelGroup>
 
-                        <h:panelGroup rendered="#{not empty publicacionBlogController.publicacionSeleccionada.comentarioList}">
+                        <h:panelGroup rendered="#{not empty publicacionBlogController.comentariosPublicacion}">
                             <h2 class="mt-5">Comentarios</h2>
-                            <ui:repeat value="#{publicacionBlogController.publicacionSeleccionada.comentarioList}" var="c">
-                                <h:panelGroup rendered="#{c.estado == 1}">
-                                    <div class="card mb-2">
-                                        <div class="card-header">
-                                            <strong><h:outputText value="#{c.usuarioId.nombreCompleto} " /></strong> <em><h:outputText rendered="#{c.usuarioId.esAdministrador}" value="Administrador" style="color: green" /></em><br />
-                                            <h:outputText value="#{c.fechaPublicacion}" style="font-size: 13px;"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText>
-                                        </div>
-                                        <div class="card-body">
-                                            <h:outputText value="#{c.comentario}" />
-                                        </div>
+                            <ui:repeat value="#{publicacionBlogController.comentariosPublicacion}" var="c">
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <strong><h:outputText value="#{c.usuarioId.nombreCompleto} " /></strong> <em><h:outputText rendered="#{c.usuarioId.esAdministrador}" value="Administrador" style="color: green" /></em><br />
+                                        <h:outputText value="#{c.fechaPublicacion}" style="font-size: 13px;"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText>
                                     </div>
-                                </h:panelGroup>
+                                    <div class="card-body">
+                                        <h:outputText value="#{c.comentario}" />
+                                    </div>
+                                    <h:panelGroup rendered="#{sesionController.usuario.esAdministrador or sesionController.usuario.idEsIgual(c.usuarioId)}">
+                                        <div class="card-footer">
+                                            <h:form prependId="false">
+                                                <h:commandLink class="btn btn-danger" actionListener="#{publicacionBlogController.seleccionarComentario(c)}" a:data-toggle="modal" a:data-target="#modalComentario">
+                                                    <f:ajax render=":modalComentarioEliminado" />
+                                                    <span class="fa fa-trash"></span> Eliminar comentario
+                                                </h:commandLink>
+                                            </h:form>
+                                        </div>
+                                    </h:panelGroup>
+                                </div>
                             </ui:repeat>
                         </h:panelGroup>
                     </div>
                 </div>
             </div>
         </article>
+    </ui:define>
+    <ui:define name="modals">
+        <ui:include src="/WEB-INF/template/blog/eliminar-comentario.xhtml" />
     </ui:define>
 </ui:composition>

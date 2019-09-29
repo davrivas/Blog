@@ -44,9 +44,11 @@ public class PublicacionBlogController implements Serializable {
     private List<Publicacion> noticias;
     private List<Publicacion> eventos;
     private List<Publicacion> discusiones;
+    private List<Comentario> comentariosPublicacion;
     
     private Publicacion publicacionSeleccionada;
     private Comentario nuevoComentario;
+    private Comentario comentarioSeleccionado;
     private Usuario autorSeleccionado;
     
     private String busqueda;
@@ -86,7 +88,12 @@ public class PublicacionBlogController implements Serializable {
     public List<Publicacion> getDiscusiones() {
         this.discusiones = pf.findAllPorTipo(cpc.getDiscusion());
         return this.discusiones;
-    }    
+    }
+
+    public List<Comentario> getComentariosPublicacion() {
+        this.comentariosPublicacion = cf.findAllByPublicacion(this.publicacionSeleccionada);
+        return this.comentariosPublicacion;
+    }
 
     public Publicacion getPublicacionSeleccionada() {
         return publicacionSeleccionada;
@@ -106,6 +113,14 @@ public class PublicacionBlogController implements Serializable {
 
     public void setNuevoComentario(Comentario nuevoComentario) {
         this.nuevoComentario = nuevoComentario;
+    }
+
+    public Comentario getComentarioSeleccionado() {
+        return comentarioSeleccionado;
+    }
+
+    public void setComentarioSeleccionado(Comentario comentarioSeleccionado) {
+        this.comentarioSeleccionado = comentarioSeleccionado;
     }
 
     public String getBusqueda() {
@@ -156,7 +171,6 @@ public class PublicacionBlogController implements Serializable {
             this.nuevoComentario.setUsuarioId(this.sc.getUsuario());
             this.nuevoComentario.setPublicacionId(this.publicacionSeleccionada);
             this.nuevoComentario.setFechaPublicacion(new Date());
-            this.nuevoComentario.setEstado((short)1);
             
             this.cf.create(this.nuevoComentario);
             
@@ -170,4 +184,20 @@ public class PublicacionBlogController implements Serializable {
         return "";
     }
     
+    public void seleccionarComentario(Comentario c) {
+        this.comentarioSeleccionado = c;
+    }
+    
+    public String eliminarComentario() {
+        try {
+            this.cf.remove(this.comentarioSeleccionado);
+            
+            this.scriptController.setScript(MessageUtils.mostrarMensajeExito("Comentario eliminado satisfactoriamente"));
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+            this.scriptController.setScript(MessageUtils.mostrarMensajeExcepcion(ex));
+        }
+        
+        return "";
+    }
 }

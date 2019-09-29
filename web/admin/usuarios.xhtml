@@ -35,23 +35,21 @@
                     </tfoot>
                     <tbody>
                         <ui:repeat value="#{usuarioAdminController.usuarios}" var="u">
-                            <h:panelGroup rendered="#{not u.idEsIgual(sesionController.usuario)}">
-                                <tr>
-                                    <td><h:outputText value="#{u.apellidos}" /></td>
-                                    <td><h:outputText value="#{u.nombres}" /></td>
-                                    <td><h:outputText value="#{u.correo}" /></td>
-                                    <td><h:outputText value="#{u.rolId.nombre}" style="#{usuarioAdminController.getRolColor(u)}" /></td>
-                                    <td>
-                                        <h:commandLink title="Editar" class="btn btn-warning ml-1 mr-1" action="#{usuarioAdminController.verEditarUsuario(u)}">
-                                            <span class="fa fa-edit"></span>
-                                        </h:commandLink>
-                                        <h:commandLink title="Eliminar" class="btn btn-danger" actionListener="#{usuarioAdminController.seleccionarUsuario(u)}" a:data-toggle="modal" a:data-target="#modalUsuario">
-                                            <f:ajax render=":modalUsuarioEliminado" />
-                                            <span class="fa fa-trash"></span>
-                                        </h:commandLink>
-                                    </td>
-                                </tr>
-                            </h:panelGroup>
+                            <tr>
+                                <td><h:outputText value="#{u.apellidos}" /></td>
+                                <td><h:outputText value="#{u.nombres}" /></td>
+                                <td><h:outputText value="#{u.correo}" /></td>
+                                <td><h:outputText value="#{u.rolId.nombre}" style="#{usuarioAdminController.getRolColor(u)}" /></td>
+                                <td>
+                                    <h:commandLink title="Editar" class="btn btn-warning ml-1 mr-1" action="#{usuarioAdminController.verEditarUsuario(u)}">
+                                        <span class="fa fa-edit"></span>
+                                    </h:commandLink>
+                                    <h:commandLink rendered="#{not u.idEsIgual(sesionController.usuario)}" title="Eliminar" class="btn btn-danger" actionListener="#{usuarioAdminController.seleccionarUsuario(u)}" a:data-toggle="modal" a:data-target="#modalUsuario">
+                                        <f:ajax render=":modalUsuarioEliminado" />
+                                        <span class="fa fa-trash"></span>
+                                    </h:commandLink>
+                                </td>
+                            </tr>
                         </ui:repeat>
                     </tbody>
                 </table>

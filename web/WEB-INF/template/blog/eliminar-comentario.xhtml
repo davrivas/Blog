@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <div class="modal fade" id="modalComentario" tabindex="-1" role="dialog" aria-labelledby="modalComentarioLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <h:panelGroup id="modalComentarioEliminado" class="modal-content" layout="block">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalComentarioLabel">¿Desea eliminar este comentario?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Autor: </strong> <h:outputText value="#{publicacionBlogController.comentarioSeleccionado.usuarioId.nombreCompleto}" /></p>
+                    <p><strong>Fecha: </strong> <h:outputText value="#{publicacionBlogController.comentarioSeleccionado.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText></p>
+                    <p><strong>Comentario: </strong></p>
+                    <p><h:outputText value="#{publicacionBlogController.comentarioSeleccionado.comentario}" /></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <h:form rendered="#{not empty publicacionBlogController.comentarioSeleccionado}" prependId="false">
+                        <h:commandButton class="btn btn-danger" action="#{publicacionBlogController.eliminarComentario()}" value="Eliminar comentario" />
+                    </h:form>
+                </div>
+            </h:panelGroup>
+        </div>
+    </div>
+</ui:composition>
+

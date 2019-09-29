@@ -24,12 +24,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "CategoriaPublicacion.findAll", query = "SELECT c FROM CategoriaPublicacion c")
     , @NamedQuery(name = "CategoriaPublicacion.findById", query = "SELECT c FROM CategoriaPublicacion c WHERE c.id = :id")
-    , @NamedQuery(name = "CategoriaPublicacion.findByNombre", query = "SELECT c FROM CategoriaPublicacion c WHERE c.nombre = :nombre")})
+    , @NamedQuery(name = "CategoriaPublicacion.findByNombre", query = "SELECT c FROM CategoriaPublicacion c WHERE c.nombre = :nombre")
+    , @NamedQuery(name = "CategoriaPublicacion.findByNombrePlural", query = "SELECT c FROM CategoriaPublicacion c WHERE c.nombrePlural = :nombrePlural")})
 public class CategoriaPublicacion implements Serializable {
-
-    @Basic(optional = false)
-    @Column(name = "nombre_plural")
-    private String nombrePlural;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,6 +37,9 @@ public class CategoriaPublicacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
+    @Basic(optional = false)
+    @Column(name = "nombre_plural")
+    private String nombrePlural;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoriaPublicacionId", fetch = FetchType.EAGER)
     private List<Publicacion> publicacionList;
 
@@ -50,9 +50,10 @@ public class CategoriaPublicacion implements Serializable {
         this.id = id;
     }
 
-    public CategoriaPublicacion(Integer id, String nombre) {
+    public CategoriaPublicacion(Integer id, String nombre, String nombrePlural) {
         this.id = id;
         this.nombre = nombre;
+        this.nombrePlural = nombrePlural;
     }
 
     public Integer getId() {
@@ -69,6 +70,14 @@ public class CategoriaPublicacion implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getNombrePlural() {
+        return nombrePlural;
+    }
+
+    public void setNombrePlural(String nombrePlural) {
+        this.nombrePlural = nombrePlural;
     }
 
     @XmlTransient
@@ -105,14 +114,6 @@ public class CategoriaPublicacion implements Serializable {
         return "blog.modelo.entidades.CategoriaPublicacion[ id=" + id + " ]";
     }
 
-    public String getNombrePlural() {
-        return nombrePlural;
-    }
-
-    public void setNombrePlural(String nombrePlural) {
-        this.nombrePlural = nombrePlural;
-    }
-    
     public boolean getEsNoticia() {
         return CategoriaPublicacionUtils.esNoticia(this);
     }
@@ -124,5 +125,5 @@ public class CategoriaPublicacion implements Serializable {
     public boolean getEsDiscusion() {
         return CategoriaPublicacionUtils.esDiscusion(this);
     }
-
+    
 }

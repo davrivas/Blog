@@ -71,6 +71,11 @@ public class UsuarioAdminController implements Serializable {
             return "";
         }
 
+        if (uf.findByCorreo(this.nuevoUsuario.getCorreo()) != null) {
+            this.scriptController.setScript(MessageUtils.mostrarMensajeError("Ya existe una dirección de correo " + this.nuevoUsuario.getCorreo() + ", intente con otra."));
+            return "";
+        }
+
         try {
             this.uf.create(this.nuevoUsuario);
 
@@ -93,6 +98,11 @@ public class UsuarioAdminController implements Serializable {
 
     public String editarUsuario() {
         try {
+            if (uf.findByCorreo(this.usuarioSeleccionado.getCorreo()) != null) {
+                this.scriptController.setScript(MessageUtils.mostrarMensajeError("Ya existe una dirección de correo " + this.usuarioSeleccionado.getCorreo() + ", intente con otra."));
+                return "";
+            }
+
             this.uf.edit(this.usuarioSeleccionado);
 
             this.usuarioSeleccionado = new Usuario();
@@ -125,11 +135,13 @@ public class UsuarioAdminController implements Serializable {
     }
 
     public String getRolColor(Usuario usuario) {
-        if (usuario == null)
+        if (usuario == null) {
             return "";
-        
-        if (usuario.getRolId() == null)
+        }
+
+        if (usuario.getRolId() == null) {
             return "";
+        }
 
         String color = "color: ";
 
