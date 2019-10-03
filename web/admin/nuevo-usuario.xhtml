@@ -28,7 +28,7 @@
             <div class="form-row">    
                 <div class="form-group col-md-6">
                     <h:outputLabel for="rol">Rol</h:outputLabel>
-                    <h:selectOneMenu id="rol" required="true" value="#{usuarioAdminController.nuevoUsuario.rolId}" class="form-control" requiredMessage="Debe seleccionar un rol para el usuario">
+                    <h:selectOneMenu id="rol" required="true" value="#{usuarioAdminController.nuevoUsuario.rolId}" converter="rolConverter" class="form-control" requiredMessage="Debe seleccionar un rol para el usuario">
                         <f:selectItem itemLabel="Seleccione un rol" />
                         <f:selectItems value="#{rolController.roles}" var="r" itemLabel="#{r.nombre}" />
                     </h:selectOneMenu>

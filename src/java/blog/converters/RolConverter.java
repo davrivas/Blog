@@ -2,17 +2,17 @@ package blog.converters;
 
 import blog.modelo.dao.RolFacade;
 import blog.modelo.entidades.Rol;
-import javax.ejb.EJB;
 import javax.enterprise.inject.spi.CDI;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter(forClass = Rol.class)
-public class RolConverter implements Converter<Rol> {
+@FacesConverter(value = "rolConverter")
+public class RolConverter implements Converter {
+    
+           
 
-    @EJB
     private RolFacade rf;
 
     public RolConverter() {
@@ -30,9 +30,9 @@ public class RolConverter implements Converter<Rol> {
     }
 
     @Override
-    public String getAsString(FacesContext arg0, UIComponent arg1, Rol obj) {
+    public String getAsString(FacesContext arg0, UIComponent arg1, Object obj) {
         if (obj != null) {
-            return obj.getId().toString();
+            return ((Rol) obj).getId().toString();
         }
         return "";
     }
