@@ -21,7 +21,7 @@
                         <h:form prependId="false">
                             <p>
                                 <em>Publicado por: </em> <h:commandLink title="Ver publicaciones de #{publicacionBlogController.publicacionSeleccionada.usuarioId.nombreCompleto}" action="#{publicacionBlogController.seleccionarAutor(publicacionBlogController.publicacionSeleccionada.usuarioId)}"><h:outputText value="#{publicacionBlogController.publicacionSeleccionada.usuarioId.nombreCompleto}" /></h:commandLink><br/>
-                                <em>Fecha de publicación: </em> <h:outputText value="#{publicacionBlogController.publicacionSeleccionada.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText><br />
+                                <em>Fecha de publicación: </em> <h:outputText value="#{publicacionBlogController.publicacionSeleccionada.fechaPublicacion}"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" timeZone="#{fechaControlador.zonaHoraria}" /></h:outputText><br />
                                 <em>Categoría: </em> <h:commandLink action="#{publicacionBlogController.seleccionarCategoria(publicacionBlogController.publicacionSeleccionada.categoriaPublicacionId)}" title="Ver #{publicacionBlogController.publicacionSeleccionada.categoriaPublicacionId.nombrePlural}"><h:outputText value="#{publicacionBlogController.publicacionSeleccionada.categoriaPublicacionId.nombre}" /></h:commandLink>
                             </p>
                         </h:form>
@@ -72,7 +72,7 @@
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         <strong><h:outputText value="#{c.usuarioId.nombreCompleto} " /></strong> <em><h:outputText rendered="#{c.usuarioId.esAdministrador}" value="Administrador" style="color: green" /></em><br />
-                                        <h:outputText value="#{c.fechaPublicacion}" style="font-size: 13px;"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" /></h:outputText>
+                                        <h:outputText value="#{c.fechaPublicacion}" style="font-size: 13px;"><f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" timeZone="#{fechaControlador.zonaHoraria}" /></h:outputText>
                                     </div>
                                     <div class="card-body">
                                         <h:outputText value="#{c.comentario}" />

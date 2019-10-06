@@ -42,7 +42,7 @@
                             <tr>
                                 <td>
                                     <h:outputText value="#{p.fechaPublicacion}">
-                                        <f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" />
+                                        <f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" timeZone="#{fechaControlador.zonaHoraria}" />
                                     </h:outputText>
                                 </td>
                                 <td><h:outputText value="#{p.categoriaPublicacionId.nombre}" /></td>
